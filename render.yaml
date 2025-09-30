@@ -16,7 +16,8 @@ services:
     env: node
     # NO PLAN = FREE TIER for web services
     branch: main
-    buildCommand: cd backend && npm ci && npm run migrate && npm run seed
+    buildCommand: cd backend && npm ci
+    # Note: Run database setup after first deployment using seed script
     startCommand: cd backend && npm start
     rootDir: .
     healthCheckPath: /health
