@@ -16,7 +16,7 @@ services:
     env: node
     # NO PLAN = FREE TIER for web services
     branch: main
-    buildCommand: cd backend && npm ci
+    buildCommand: cd backend && npm ci && npm run migrate && npm run seed
     startCommand: cd backend && npm start
     rootDir: .
     healthCheckPath: /health
