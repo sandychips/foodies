@@ -1,20 +1,20 @@
 previewsEnabled: false
 
-# Database Services - FREE TIER
+# Database Services
 databases:
   - name: foodies-db
     databaseName: foodies_production
     user: foodies_user
-    plan: free  # PostgreSQL free tier
+    plan: free
     ipAllowList: []
 
-# Backend Services - FREE TIER
+# Backend Services (Production Only)
 services:
-  # Backend Web Service - FREE TIER
+  # Production Backend  
   - type: web
     name: foodies-backend
     env: node
-    # NO PLAN = FREE TIER for web services
+    plan: starter
     branch: main
     buildCommand: cd backend && npm ci
     startCommand: cd backend && npm start
@@ -38,13 +38,28 @@ services:
       - key: REFRESH_TOKEN_EXPIRE
         value: "30d"
       - key: SWAGGER_ENABLED
-        value: "true"  # Enable for demo
+        value: "false"
       # Add your Cloudinary credentials in Render dashboard
       - key: CLOUDINARY_CLOUD_NAME
-        value: "dd9fyaeon"
+        value: "your-cloudinary-name"  # Update in dashboard
       - key: CLOUDINARY_API_KEY
-        value: "219778695899535"
+        value: "your-cloudinary-key"   # Update in dashboard
       - key: CLOUDINARY_API_SECRET
-        value: "5FRoXA6Lk9Vu4d3NxnYbMhxtSno"
+        value: "your-cloudinary-secret" # Update in dashboard
       - key: CORS_ORIGIN
-        value: "https://foodies-frontend.onrender.com,https://your-app.vercel.app"
+        value: "https://foodies-frontend.onrender.com"
+
+  # Production Frontend
+  - type: web
+    name: foodies-frontend
+    env: static
+    plan: starter
+    branch: main
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    rootDir: .
+    envVars:
+      - key: VITE_API_URL
+        value: "https://foodies-backend.onrender.com/api/v1"
+      - key: NODE_ENV
+        value: production
