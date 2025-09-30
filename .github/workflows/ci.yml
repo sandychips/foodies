@@ -60,7 +60,7 @@ jobs:
         run: npm test
 
       - name: Upload backend coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: ./backend/coverage/coverage-final.json
           flags: backend
@@ -97,7 +97,7 @@ jobs:
         run: npx vitest run
 
       - name: Upload frontend coverage
-        uses: codecov/codecov-action@v4
+        uses: codecov/codecov-action@v5
         with:
           files: ./frontend/coverage/coverage-final.json
           flags: frontend
