@@ -95,9 +95,10 @@ services:
         value: "https://foodies-prod-frontend.onrender.com"
 
   # Staging Frontend
-  - type: static
+  - type: web
     name: foodies-staging-frontend
     env: static
+    plan: free
     branch: develop
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
@@ -109,9 +110,10 @@ services:
         value: staging
 
   # Production Frontend
-  - type: static
+  - type: web
     name: foodies-prod-frontend
-    env: static  
+    env: static
+    plan: free
     branch: main
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
