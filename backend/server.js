@@ -22,7 +22,6 @@ app.use(cors({
   credentials: true,
 }));
 app.use(compression());
-app.use(rateLimiter);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -30,9 +29,13 @@ if (process.env.NODE_ENV !== 'production') {
   app.use(morgan('dev'));
 }
 
+// Health check endpoint - BEFORE rate limiting
 app.get('/health', (req, res) => {
   res.json({ status: 'ok' });
 });
+
+// Apply rate limiting to all other routes
+app.use(rateLimiter);
 
 if (process.env.SWAGGER_ENABLED !== 'false') {
   app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
