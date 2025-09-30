@@ -1,0 +1,45 @@
+.list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.list > * {
+  flex: 1 0 calc(28% - 10px);
+  margin: 0.5%;
+}
+
+.list > *:nth-child(9n + 3),
+.list > *:nth-child(9n + 4),
+.list > *:nth-child(9n + 8) {
+  flex: 1 0 calc(40% - 10px);
+}
+
+.list > *:last-child {
+  max-width: 40%;
+}
+
+.list::after {
+  content: '';
+  flex: 1 0 calc(28% - 10px);
+  max-width: calc(30% - 10px);
+}
+
+@media (max-width: 767px) {
+  .list > * {
+    flex: 1;
+    flex-shrink: 0;
+  }
+
+  .list > *:nth-child(5n) {
+    flex: 1 0 100%;
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 320px) {
+  .list > * {
+    flex: 1;
+    min-width: 100%;
+    flex-shrink: 0;
+  }
+}

@@ -1,0 +1,27 @@
+.list {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 32px;
+    margin: 0 auto;
+}
+.empty {
+    color: #888;
+    font-style: italic;
+}
+
+@media only screen and (min-width: 768px) {
+    .list {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 704px;
+        gap: 40px 20px;
+    }
+}
+
+@media only screen and (min-width: 1440px) {
+    .list {
+        width: 100%;
+    }
+}

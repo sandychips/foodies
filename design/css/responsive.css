@@ -1,0 +1,552 @@
+/**
+ * Responsive Design - Media queries and breakpoint-specific styles
+ * Following mobile-first approach with progressive enhancement
+ */
+
+/* ================================
+ * Mobile First Base Styles (320px+)
+ * ================================ */
+
+/* Base styles are already mobile-friendly in other CSS files */
+
+/* ================================
+ * Small Mobile (480px+)
+ * ================================ */
+
+@media (min-width: 480px) {
+    .categories__row {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-4);
+    }
+    
+    .categories__row:nth-child(4) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+/* ================================
+ * Tablet Portrait (640px+)
+ * ================================ */
+
+@media (min-width: 640px) {
+    /* Container adjustments */
+    .container {
+        padding: 0 var(--space-8);
+    }
+    
+    /* Header adjustments */
+    .header__content {
+        padding: 0 var(--space-8);
+    }
+    
+    /* Hero section adjustments */
+    .hero {
+        padding: var(--space-24) 0 var(--space-20);
+    }
+    
+    .hero__content {
+        gap: var(--space-12);
+    }
+    
+    .hero__image-main {
+        width: 360px;
+        height: 340px;
+    }
+    
+    .hero__image-secondary {
+        width: 150px;
+        height: 140px;
+    }
+    
+    /* Categories grid */
+    .categories__row {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-5);
+    }
+    
+    /* Testimonials */
+    .testimonial__text {
+        font-size: var(--font-size-body);
+    }
+    
+    /* Footer adjustments */
+    .footer__brand {
+        flex-direction: row;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 600px;
+    }
+}
+
+/* ================================
+ * Tablet Landscape (768px+)
+ * ================================ */
+
+@media (min-width: 768px) {
+    /* Typography scale up */
+    :root {
+        --font-size-h1: 3rem;
+        --font-size-h2: 2.25rem;
+    }
+    
+    /* Header enhancements */
+    .header {
+        backdrop-filter: blur(15px);
+    }
+    
+    .header__nav {
+        display: block;
+    }
+    
+    .nav-menu {
+        flex-direction: row;
+    }
+    
+    .nav-menu__item {
+        padding: var(--space-3) var(--space-5);
+    }
+    
+    /* Hero section improvements */
+    .hero__content {
+        gap: var(--space-16);
+        min-height: 70vh;
+    }
+    
+    .hero__title {
+        line-height: 1.1;
+    }
+    
+    .hero__image-main {
+        width: 400px;
+        height: 380px;
+    }
+    
+    .hero__image-secondary {
+        width: 170px;
+        height: 160px;
+        top: 1.5rem;
+        right: -1.5rem;
+    }
+    
+    /* Categories improvements */
+    .categories__grid {
+        gap: var(--space-8);
+    }
+    
+    .categories__row {
+        gap: var(--space-6);
+    }
+    
+    /* Restore masonry layout */
+    .categories__row:nth-child(1) {
+        grid-template-columns: 1fr 1fr 1.2fr;
+    }
+    
+    .categories__row:nth-child(2) {
+        grid-template-columns: 1.2fr 1fr 1fr;
+    }
+    
+    .categories__row:nth-child(3) {
+        grid-template-columns: 1fr 1.2fr 1fr;
+    }
+    
+    .categories__row:nth-child(4) {
+        grid-template-columns: 1.2fr 1fr 1fr;
+    }
+    
+    /* Modal improvements */
+    .modal__container {
+        max-width: 32rem;
+    }
+    
+    .modal__header {
+        padding: var(--space-8) var(--space-8) var(--space-6);
+    }
+    
+    .modal__form {
+        padding: var(--space-8);
+    }
+}
+
+/* ================================
+ * Desktop Small (1024px+)
+ * ================================ */
+
+@media (min-width: 1024px) {
+    /* Container expansion */
+    .container {
+        padding: 0 var(--space-12);
+    }
+    
+    /* Typography full scale */
+    :root {
+        --font-size-h1: 3.5rem;
+        --font-size-h2: 2.5rem;
+    }
+    
+    /* Header full layout */
+    .header__content {
+        padding: 0 var(--space-12);
+    }
+    
+    .header__nav {
+        position: static;
+        transform: none;
+    }
+    
+    /* Hero section full layout */
+    .hero {
+        padding: var(--space-32) 0 var(--space-24);
+    }
+    
+    .hero__content {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-20);
+        min-height: 80vh;
+    }
+    
+    .hero__image-main {
+        width: 440px;
+        height: 414px;
+    }
+    
+    .hero__image-secondary {
+        width: 185px;
+        height: 174px;
+        top: 2rem;
+        right: -2rem;
+    }
+    
+    /* Enhanced decorations */
+    .decoration--1 {
+        width: 80px;
+        height: 80px;
+    }
+    
+    .decoration--2 {
+        width: 100px;
+        height: 100px;
+    }
+    
+    .decoration--3 {
+        width: 90px;
+        height: 90px;
+    }
+    
+    .decoration--4 {
+        width: 110px;
+        height: 110px;
+    }
+    
+    /* Categories full layout */
+    .categories__header {
+        margin-bottom: var(--space-20);
+    }
+    
+    .categories__grid {
+        gap: var(--space-10);
+    }
+    
+    .categories__row {
+        gap: var(--space-8);
+    }
+    
+    /* Enhanced hover effects */
+    .category-card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-xl);
+    }
+    
+    /* Testimonials enhancements */
+    .testimonials {
+        padding: var(--space-32) 0;
+    }
+    
+    .testimonials__content {
+        max-width: 900px;
+    }
+    
+    .testimonial__text {
+        font-size: var(--font-size-body-large);
+    }
+}
+
+/* ================================
+ * Desktop Large (1280px+)
+ * ================================ */
+
+@media (min-width: 1280px) {
+    /* Maximum container width */
+    .container {
+        max-width: var(--container-max-width);
+    }
+    
+    /* Enhanced spacing */
+    .hero {
+        padding: var(--space-32) 0 var(--space-32);
+    }
+    
+    .categories {
+        padding: var(--space-32) 0;
+    }
+    
+    .testimonials {
+        padding: var(--space-32) 0;
+    }
+    
+    /* Full-size images and decorations */
+    .hero__content {
+        min-height: 85vh;
+    }
+}
+
+/* ================================
+ * Desktop XL (1536px+)
+ * ================================ */
+
+@media (min-width: 1536px) {
+    /* Ultra-wide layout adjustments */
+    .hero__content {
+        grid-template-columns: 1.2fr 1fr;
+        gap: var(--space-24);
+    }
+    
+    .categories__header {
+        max-width: 1000px;
+    }
+    
+    /* Enhanced decorations for large screens */
+    .decoration {
+        opacity: 0.4;
+    }
+}
+
+/* ================================
+ * Mobile Specific Adjustments (max-width breakpoints)
+ * ================================ */
+
+/* Large Mobile (max 640px) */
+@media (max-width: 640px) {
+    /* Header mobile layout */
+    .header__nav {
+        display: none;
+    }
+    
+    .header__content {
+        justify-content: space-between;
+        padding: 0 var(--space-4);
+    }
+    
+    .auth-buttons {
+        gap: var(--space-2);
+        padding: var(--space-1);
+    }
+    
+    .auth-buttons .btn {
+        padding: 0 var(--space-3);
+        height: 2.5rem;
+        font-size: var(--font-size-body-small);
+    }
+    
+    /* Hero mobile layout */
+    .hero {
+        padding: var(--space-16) 0 var(--space-12);
+    }
+    
+    .hero__content {
+        grid-template-columns: 1fr;
+        gap: var(--space-8);
+        text-align: center;
+        min-height: auto;
+    }
+    
+    .hero__text {
+        order: 1;
+        max-width: none;
+    }
+    
+    .hero__visuals {
+        order: 0;
+        justify-content: center;
+    }
+    
+    .hero__image-main {
+        width: 280px;
+        height: 260px;
+    }
+    
+    .hero__image-secondary {
+        width: 120px;
+        height: 110px;
+        top: 1rem;
+        right: -1rem;
+    }
+    
+    /* Categories mobile layout */
+    .categories__row {
+        grid-template-columns: 1fr;
+        gap: var(--space-4);
+    }
+    
+    .categories__row:nth-child(4) {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    /* Testimonials mobile */
+    .testimonials__content {
+        padding: 0 var(--space-4);
+    }
+    
+    .testimonial__text {
+        font-size: var(--font-size-body);
+        margin-bottom: var(--space-4);
+    }
+    
+    /* Footer mobile */
+    .footer__brand {
+        flex-direction: column;
+        gap: var(--space-4);
+    }
+    
+    .footer__social {
+        gap: var(--space-3);
+    }
+}
+
+/* Small Mobile (max 480px) */
+@media (max-width: 480px) {
+    /* Extreme mobile adjustments */
+    .container {
+        padding: 0 var(--space-4);
+    }
+    
+    .hero__title {
+        font-size: 2rem;
+        line-height: 1.2;
+    }
+    
+    .hero__description {
+        font-size: var(--font-size-body);
+    }
+    
+    .hero__image-main {
+        width: 240px;
+        height: 220px;
+    }
+    
+    .hero__image-secondary {
+        width: 100px;
+        height: 95px;
+        top: 0.5rem;
+        right: -0.5rem;
+    }
+    
+    .categories__title {
+        font-size: var(--font-size-h3);
+    }
+    
+    .categories__description {
+        font-size: var(--font-size-body);
+    }
+    
+    .category-card__content {
+        padding: var(--space-3);
+    }
+    
+    .category-card__label {
+        padding: var(--space-1) var(--space-3);
+        font-size: var(--font-size-body-small);
+    }
+}
+
+/* ================================
+ * Print Styles Override
+ * ================================ */
+
+@media print {
+    /* Hide interactive elements */
+    .header,
+    .hero__cta,
+    .btn-icon,
+    .testimonials__navigation,
+    .modal {
+        display: none !important;
+    }
+    
+    /* Optimize layout for print */
+    .hero {
+        background: none !important;
+        color: #000 !important;
+        padding: 2rem 0 !important;
+    }
+    
+    .hero__title,
+    .hero__description {
+        color: #000 !important;
+        text-shadow: none !important;
+    }
+    
+    .categories__row {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 1rem !important;
+        page-break-inside: avoid;
+    }
+    
+    .category-card {
+        background: #f5f5f5 !important;
+        border: 1px solid #ddd !important;
+        height: auto !important;
+        min-height: 4rem !important;
+    }
+    
+    .footer {
+        background: none !important;
+        color: #000 !important;
+        border-top: 1px solid #ddd;
+    }
+}
+
+/* ================================
+ * High DPI/Retina Display Support
+ * ================================ */
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* Crisp rendering for high-DPI displays */
+    .hero__image-main,
+    .hero__image-secondary {
+        background-size: cover;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+    
+    .decoration {
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+}
+
+/* ================================
+ * Landscape Orientation Adjustments
+ * ================================ */
+
+@media (orientation: landscape) and (max-height: 600px) {
+    /* Optimize for landscape mobile */
+    .hero {
+        padding: var(--space-8) 0;
+    }
+    
+    .hero__content {
+        min-height: auto;
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .hero__image-main {
+        width: 200px;
+        height: 180px;
+    }
+    
+    .hero__image-secondary {
+        width: 80px;
+        height: 75px;
+    }
+}

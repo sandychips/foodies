@@ -1,0 +1,40 @@
+.nav {
+  display: none;
+  align-items: center;
+  gap: 55px;
+}
+
+.link {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--white);
+}
+
+:global(.header-light) .link {
+  color: var(--main);
+}
+
+.link.active {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 30px;
+  padding: 14px;
+}
+
+:global(.header-light) .link.active {
+  border: 1px solid var(--gray);
+}
+
+@media (min-width: 768px) {
+  .nav {
+    display: flex;
+  }
+}
+
+@media (min-width: 1440px) {
+  .nav {
+    margin-left: 110px;
+  }
+}

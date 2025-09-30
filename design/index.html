@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Foodies - Improve Your Culinary Talents with amazing recipes for beginners in the world of cooking">
+    <meta name="keywords" content="recipes, cooking, food, culinary, kitchen, ingredients">
+    <title>Foodies - Improve Your Culinary Talents</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+    <!-- Skip to content link for keyboard navigation -->
+    <a href="#main-content" class="skip-to-content">Skip to main content</a>
+    
+    <!-- Header -->
+    <header class="header" role="banner">
+        <div class="container">
+            <div class="header__content">
+                <!-- Logo -->
+                <div class="header__logo">
+                    <a href="#" class="logo" aria-label="Foodies - Home">
+                        <span class="logo__text">Foodies</span>
+                    </a>
+                </div>
+
+                <!-- Navigation -->
+                <nav class="header__nav" role="navigation" aria-label="Main navigation">
+                    <div class="nav-menu">
+                        <a href="#" class="nav-menu__item nav-menu__item--active" aria-current="page">
+                            <span>HOME</span>
+                        </a>
+                        <a href="#" class="nav-menu__item">
+                            <span>Add recipe</span>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- User Actions -->
+                <div class="header__actions">
+                    <div class="auth-buttons">
+                        <button class="btn btn--ghost" type="button" aria-label="Sign in">
+                            Sign in
+                        </button>
+                        <button class="btn btn--outlined" type="button" aria-label="Sign up">
+                            Sign up
+                        </button>
+                    </div>
+                    
+                    <!-- User Profile (hidden by default) -->
+                    <div class="user-profile" hidden>
+                        <div class="user-profile__info">
+                            <div class="user-profile__avatar" role="img" aria-label="User avatar"></div>
+                            <div class="user-profile__details">
+                                <span class="user-profile__name">Victoria</span>
+                                <button class="user-profile__dropdown" aria-label="User menu" aria-expanded="false">
+                                    <svg class="chevron-icon" width="16" height="16" viewBox="0 0 16 16">
+                                        <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main id="main-content" class="main" role="main">
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero" aria-labelledby="hero-title">
+                <div class="hero__content">
+                    <div class="hero__text">
+                        <h1 id="hero-title" class="hero__title">
+                            Improve Your Culinary Talents
+                        </h1>
+                        <p class="hero__description">
+                            Amazing recipes for beginners in the world of cooking, enveloping you in the aromas and tastes of various cuisines.
+                        </p>
+                        <button class="btn btn--primary hero__cta" type="button">
+                            Add recipe
+                        </button>
+                    </div>
+                    <div class="hero__visuals">
+                        <div class="hero__image-main" role="img" aria-label="Featured cooking image"></div>
+                        <div class="hero__image-secondary" role="img" aria-label="Secondary cooking image"></div>
+                        <!-- Decorative elements -->
+                        <div class="hero__decorations" aria-hidden="true">
+                            <div class="decoration decoration--1"></div>
+                            <div class="decoration decoration--2"></div>
+                            <div class="decoration decoration--3"></div>
+                            <div class="decoration decoration--4"></div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Categories Section -->
+            <section class="categories" aria-labelledby="categories-title">
+                <div class="categories__header">
+                    <h2 id="categories-title" class="categories__title">Categories</h2>
+                    <p class="categories__description">
+                        Discover a limitless world of culinary possibilities and enjoy exquisite recipes that combine taste, style and the warm atmosphere of the kitchen.
+                    </p>
+                </div>
+                
+                <div class="categories__grid">
+                    <!-- Row 1 -->
+                    <div class="categories__row">
+                        <article class="category-card category-card--beef">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Beef</span>
+                                    <button class="btn-icon" aria-label="View Beef recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--breakfast">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Breakfast</span>
+                                    <button class="btn-icon" aria-label="View Breakfast recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--desserts">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Desserts</span>
+                                    <button class="btn-icon" aria-label="View Dessert recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Row 2 -->
+                    <div class="categories__row">
+                        <article class="category-card category-card--lamb">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Lamb</span>
+                                    <button class="btn-icon" aria-label="View Lamb recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--goat">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Goat</span>
+                                    <button class="btn-icon" aria-label="View Goat recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--miscellaneous">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Miscellaneous</span>
+                                    <button class="btn-icon" aria-label="View Miscellaneous recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Row 3 -->
+                    <div class="categories__row">
+                        <article class="category-card category-card--pasta">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Pasta</span>
+                                    <button class="btn-icon" aria-label="View Pasta recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--pork">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Pork</span>
+                                    <button class="btn-icon" aria-label="View Pork recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--seafood">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Seafood</span>
+                                    <button class="btn-icon" aria-label="View Seafood recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <!-- Row 4 -->
+                    <div class="categories__row">
+                        <article class="category-card category-card--side">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Side</span>
+                                    <button class="btn-icon" aria-label="View Side dish recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <article class="category-card category-card--starter">
+                            <div class="category-card__content">
+                                <div class="category-card__actions">
+                                    <span class="category-card__label">Starter</span>
+                                    <button class="btn-icon" aria-label="View Starter recipes">
+                                        <svg width="16" height="16" viewBox="0 0 16 16">
+                                            <path d="M6 10l4-4m0 0l-4-4m4 4H2" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </article>
+                        
+                        <div class="category-card category-card--all-categories">
+                            <div class="category-card__content">
+                                <button class="btn btn--primary btn--full-width" type="button">
+                                    All categories
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Testimonials Section -->
+            <section class="testimonials" aria-labelledby="testimonials-title">
+                <div class="testimonials__header">
+                    <div class="testimonials__labels">
+                        <span class="testimonials__subtitle">What our customer say</span>
+                        <h2 id="testimonials-title" class="testimonials__title">Testimonials</h2>
+                    </div>
+                </div>
+                
+                <div class="testimonials__content">
+                    <blockquote class="testimonial">
+                        <p class="testimonial__text">
+                            Thank you for the wonderful recipe for feta pasta with tomatoes and basil. It turned out to be not only tasty, but also incredibly colorful. This has become a favorite family meal!
+                        </p>
+                        <footer class="testimonial__footer">
+                            <cite class="testimonial__author">Larry Pageim</cite>
+                        </footer>
+                    </blockquote>
+                    
+                    <div class="testimonials__navigation" role="tablist" aria-label="Testimonial navigation">
+                        <button class="testimonials__dot testimonials__dot--active" role="tab" aria-selected="true" aria-label="View first testimonial"></button>
+                        <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="View second testimonial"></button>
+                        <button class="testimonials__dot" role="tab" aria-selected="false" aria-label="View third testimonial"></button>
+                    </div>
+                    
+                    <div class="testimonials__decoration" aria-hidden="true">
+                        <svg width="64" height="64" viewBox="0 0 64 64" class="quote-icon">
+                            <path d="M26.667 21.333c-5.891 0-10.667 4.776-10.667 10.667v16c0 5.891 4.776 10.667 10.667 10.667h5.333V42.667h-5.333c-2.946 0-5.334-2.388-5.334-5.334v-5.333h10.667V21.333h-5.333zm21.333 0c-5.891 0-10.667 4.776-10.667 10.667v16c0 5.891 4.776 10.667 10.667 10.667H53.333V42.667H48c-2.946 0-5.334-2.388-5.334-5.334v-5.333H53.333V21.333H48z" fill="currentColor"/>
+                        </svg>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__brand">
+                    <div class="footer__logo">
+                        <span class="logo__text">Foodies</span>
+                    </div>
+                    <div class="footer__social">
+                        <a href="#" class="social-link" aria-label="Facebook">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <path d="M18.896 0H1.104C.494 0 0 .494 0 1.104v17.793C0 19.506.494 20 1.104 20h9.58v-7.745H8.076V9.237h2.608V7.01c0-2.583 1.578-3.99 3.883-3.99 1.104 0 2.052.082 2.329.119v2.7l-1.598.001c-1.254 0-1.496.597-1.496 1.47v1.928h2.989l-.39 3.018h-2.6V20h5.098c.608 0 1.102-.494 1.102-1.104V1.104C20 .494 19.506 0 18.896 0z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="Instagram">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <path d="M10 1.802c2.67 0 2.987.01 4.042.059 2.71.123 3.975 1.409 4.099 4.099.048 1.054.057 1.37.057 4.04 0 2.672-.01 2.988-.057 4.042-.124 2.687-1.387 3.975-4.1 4.099-1.054.048-1.37.058-4.041.058-2.67 0-2.987-.01-4.04-.058-2.717-.124-3.977-1.416-4.1-4.1-.048-1.054-.058-1.37-.058-4.041 0-2.67.01-2.986.058-4.04.124-2.69 1.387-3.977 4.1-4.1 1.054-.048 1.37-.058 4.04-.058zM10 0C7.284 0 6.944.012 5.878.06 2.246.227.228 2.242.061 5.877.01 6.944 0 7.284 0 10s.012 3.057.06 4.123c.167 3.632 2.182 5.65 5.817 5.817 1.067.048 1.407.06 4.123.06s3.057-.012 4.123-.06c3.629-.167 5.652-2.182 5.816-5.817.05-1.066.061-1.407.061-4.123s-.012-3.056-.06-4.122C19.773 2.249 17.76.228 14.124.061 13.057.01 12.717 0 10 0zm0 4.865a5.135 5.135 0 100 10.27 5.135 5.135 0 000-10.27zm0 8.468a3.333 3.333 0 110-6.666 3.333 3.333 0 010 6.666zm5.338-9.87a1.2 1.2 0 100 2.4 1.2 1.2 0 000-2.4z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link" aria-label="YouTube">
+                            <svg width="20" height="20" viewBox="0 0 20 20">
+                                <path d="M19.615 3.184c-3.604-.246-11.631-.245-15.23 0-3.897.266-4.356 2.62-4.385 6.816.029 4.192.484 6.549 4.385 6.816 3.6.245 11.626.246 15.23 0 3.897-.266 4.356-2.62 4.385-6.816-.029-4.192-.484-6.549-4.385-6.816zm-10.615 9.816v-6l6 3-6 3z" fill="currentColor"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer__divider" aria-hidden="true"></div>
+                <div class="footer__bottom">
+                    <p class="footer__copyright">@2024, Foodies. All rights reserved</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modals -->
+    <!-- Sign In Modal -->
+    <div class="modal" id="signin-modal" role="dialog" aria-labelledby="signin-title" aria-hidden="true">
+        <div class="modal__backdrop"></div>
+        <div class="modal__container">
+            <div class="modal__content">
+                <header class="modal__header">
+                    <h2 id="signin-title" class="modal__title">Sign in</h2>
+                    <button class="modal__close" type="button" aria-label="Close modal">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M12 4L4 12m8 0L4 4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </button>
+                </header>
+                <form class="modal__form" novalidate>
+                    <div class="form-group">
+                        <label for="signin-email" class="form-label">Email*</label>
+                        <input type="email" id="signin-email" name="email" class="form-input" required aria-describedby="signin-email-error">
+                        <span id="signin-email-error" class="form-error" aria-live="polite"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="signin-password" class="form-label">Password</label>
+                        <div class="form-input-group">
+                            <input type="password" id="signin-password" name="password" class="form-input" required aria-describedby="signin-password-error">
+                            <button type="button" class="form-input-toggle" aria-label="Toggle password visibility">
+                                <svg class="eye-icon" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span id="signin-password-error" class="form-error" aria-live="polite"></span>
+                    </div>
+                    <div class="modal__actions">
+                        <button type="submit" class="btn btn--primary btn--full-width">Sign in</button>
+                        <p class="modal__link-text">Don't have an account? <button type="button" class="link-button">Create an account</button></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signup-modal" role="dialog" aria-labelledby="signup-title" aria-hidden="true">
+        <div class="modal__backdrop"></div>
+        <div class="modal__container">
+            <div class="modal__content">
+                <header class="modal__header">
+                    <h2 id="signup-title" class="modal__title">Sign up</h2>
+                    <button class="modal__close" type="button" aria-label="Close modal">
+                        <svg width="16" height="16" viewBox="0 0 16 16">
+                            <path d="M12 4L4 12m8 0L4 4" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                        </svg>
+                    </button>
+                </header>
+                <form class="modal__form" novalidate>
+                    <div class="form-group">
+                        <label for="signup-name" class="form-label">Name*</label>
+                        <input type="text" id="signup-name" name="name" class="form-input" required aria-describedby="signup-name-error">
+                        <span id="signup-name-error" class="form-error" aria-live="polite"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-email" class="form-label">Email*</label>
+                        <input type="email" id="signup-email" name="email" class="form-input" required aria-describedby="signup-email-error">
+                        <span id="signup-email-error" class="form-error" aria-live="polite"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="signup-password" class="form-label">Password</label>
+                        <div class="form-input-group">
+                            <input type="password" id="signup-password" name="password" class="form-input" required aria-describedby="signup-password-error">
+                            <button type="button" class="form-input-toggle" aria-label="Toggle password visibility">
+                                <svg class="eye-icon" width="16" height="16" viewBox="0 0 16 16">
+                                    <path d="M1 8s3-5 7-5 7 5 7 5-3 5-7 5-7-5-7-5z" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                    <circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5" fill="none"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <span id="signup-password-error" class="form-error" aria-live="polite"></span>
+                    </div>
+                    <div class="modal__actions">
+                        <button type="submit" class="btn btn--primary btn--full-width">Create</button>
+                        <p class="modal__link-text">I already have an account? <button type="button" class="link-button">Sign in</button></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>

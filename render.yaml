@@ -1,0 +1,123 @@
+previewsEnabled: true
+
+# Database Services
+databases:
+  - name: foodies-staging-db
+    databaseName: foodies_staging
+    user: foodies_staging_user
+    plan: free  # Change to starter for production
+    ipAllowList: []
+    
+  - name: foodies-prod-db
+    databaseName: foodies_production  
+    user: foodies_prod_user
+    plan: free  # Change to starter for production
+    ipAllowList: []
+
+# Backend Services
+services:
+  # Staging Backend
+  - type: web
+    name: foodies-staging-backend
+    env: node
+    plan: free  # Change to starter for production
+    branch: develop
+    buildCommand: cd backend && npm ci
+    startCommand: cd backend && npm start
+    rootDir: .
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: staging
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: foodies-staging-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REFRESH_TOKEN_SECRET
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: "7d"
+      - key: REFRESH_TOKEN_EXPIRE
+        value: "30d"
+      - key: SWAGGER_ENABLED
+        value: "true"
+      # Add your Cloudinary credentials in Render dashboard
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "your-cloudinary-name"  # Update in dashboard
+      - key: CLOUDINARY_API_KEY
+        value: "your-cloudinary-key"   # Update in dashboard  
+      - key: CLOUDINARY_API_SECRET
+        value: "your-cloudinary-secret" # Update in dashboard
+      - key: CORS_ORIGIN
+        value: "https://foodies-staging-frontend.onrender.com"
+
+  # Production Backend  
+  - type: web
+    name: foodies-prod-backend
+    env: node
+    plan: starter  # Recommended for production
+    branch: main
+    buildCommand: cd backend && npm ci
+    startCommand: cd backend && npm start
+    rootDir: .
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: DATABASE_URL
+        fromDatabase:
+          name: foodies-prod-db
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: REFRESH_TOKEN_SECRET  
+        generateValue: true
+      - key: JWT_EXPIRE
+        value: "7d"
+      - key: REFRESH_TOKEN_EXPIRE
+        value: "30d"
+      - key: SWAGGER_ENABLED
+        value: "false"
+      # Add your Cloudinary credentials in Render dashboard
+      - key: CLOUDINARY_CLOUD_NAME
+        value: "your-cloudinary-name"  # Update in dashboard
+      - key: CLOUDINARY_API_KEY
+        value: "your-cloudinary-key"   # Update in dashboard
+      - key: CLOUDINARY_API_SECRET
+        value: "your-cloudinary-secret" # Update in dashboard
+      - key: CORS_ORIGIN
+        value: "https://foodies-prod-frontend.onrender.com"
+
+  # Staging Frontend
+  - type: static
+    name: foodies-staging-frontend
+    env: static
+    branch: develop
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    rootDir: .
+    envVars:
+      - key: VITE_API_URL
+        value: "https://foodies-staging-backend.onrender.com/api/v1"
+      - key: NODE_ENV
+        value: staging
+
+  # Production Frontend
+  - type: static
+    name: foodies-prod-frontend
+    env: static  
+    branch: main
+    buildCommand: cd frontend && npm ci && npm run build
+    staticPublishPath: frontend/dist
+    rootDir: .
+    envVars:
+      - key: VITE_API_URL
+        value: "https://foodies-prod-backend.onrender.com/api/v1"
+      - key: NODE_ENV
+        value: production

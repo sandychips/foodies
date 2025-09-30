@@ -1,0 +1,330 @@
+# Next Steps: React Development Setup
+
+## 📁 Current Structure
+
+Your project is now organized for React development:
+
+```
+/home/andy/projects/foodiescorp/
+├── design/                    # 📋 Complete reference implementation
+│   ├── index.html            # HTML structure reference
+│   ├── css/                  # All styling references
+│   ├── js/                   # Interactive functionality reference
+│   ├── assets/               # Images and assets from Figma
+│   ├── README.md             # Complete project documentation
+│   └── REACT_REFERENCE.md    # React development guide
+└── NEXT_STEPS.md             # This file
+```
+
+## 🚀 Quick Start for React Development
+
+### 1. Initialize React Project
+```bash
+# From /home/andy/projects/foodiescorp/
+# Recommended: Create React App with TypeScript (CSS Modules built-in)
+npx create-react-app foodies-react --template typescript
+
+# Alternative: Vite (faster development)
+npm create vite@latest foodies-react -- --template react-ts
+```
+
+### 2. Copy Assets
+```bash
+# Copy assets to your React project
+cp -r design/assets/ foodies-react/src/assets/
+```
+
+### 3. Set up Design Tokens
+Copy and adapt `design/css/variables.css` to `src/styles/variables.module.css`
+
+### 4. Configure TypeScript for CSS Modules
+Create `src/types/css-modules.d.ts`:
+```typescript
+declare module '*.module.css' {
+  const classes: { readonly [key: string]: string };
+  export default classes;
+}
+```
+
+## 🎯 Development Approach: CSS Modules
+
+The React frontend will use **CSS Modules** for styling, which provides:
+- ✅ Scoped CSS classes (no naming conflicts)
+- ✅ Direct adaptation from reference CSS files
+- ✅ Better maintainability and debugging
+- ✅ TypeScript support for CSS classes
+
+### Setup CSS Modules
+CSS Modules work out-of-the-box with Create React App when using `.module.css` file extension.
+
+```bash
+# No additional installation needed for Create React App
+# Files should be named: Component.module.css
+```
+
+### Structure
+```
+src/
+├── styles/
+│   ├── variables.module.css    # Design tokens (copied from design/css/variables.css)
+│   ├── base.module.css         # Global styles
+│   └── mixins.module.css       # Reusable style mixins
+├── components/
+│   ├── Button/
+│   │   ├── Button.tsx
+│   │   └── Button.module.css   # Component-specific styles
+│   └── Modal/
+│       ├── Modal.tsx
+│       └── Modal.module.css
+```
+
+### Implementation Example
+```typescript
+// Button.tsx
+import styles from './Button.module.css';
+
+interface ButtonProps {
+  variant?: 'primary' | 'outlined' | 'ghost';
+  size?: 'sm' | 'md' | 'lg';
+  children: React.ReactNode;
+}
+
+export const Button: React.FC<ButtonProps> = ({ 
+  variant = 'primary', 
+  size = 'md', 
+  children,
+  ...props 
+}) => {
+  return (
+    <button 
+      className={`${styles.btn} ${styles[variant]} ${styles[size]}`}
+      {...props}
+    >
+      {children}
+    </button>
+  );
+};
+```
+
+```css
+/* Button.module.css - adapted from design/css/components.css */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  height: var(--button-height);
+  padding: 0 var(--button-padding-x);
+  /* ... other styles from design reference */
+}
+
+.primary {
+  background: var(--gradient-primary);
+  color: var(--color-white);
+  /* ... from .btn--primary in reference */
+}
+
+.outlined {
+  background: transparent;
+  color: var(--color-gray-900);
+  border-color: var(--color-gray-300);
+  /* ... from .btn--outlined in reference */
+}
+```
+
+## 📋 Component Development Order
+
+1. **Setup & Foundation**
+   - [ ] Project initialization
+   - [ ] Design tokens/theme setup
+   - [ ] Base typography and layout
+
+2. **Core Components**
+   - [ ] Button component (reference: `design/css/components.css` `.btn`)
+   - [ ] Input/Form components (reference: `.form-input`, `.form-group`)
+   - [ ] Modal component (reference: `.modal`)
+
+3. **Layout Components**  
+   - [ ] Header (reference: `design/index.html` lines 26-76)
+   - [ ] Footer (reference: lines 319-351)
+   - [ ] Container/Layout wrapper
+
+4. **Page Sections**
+   - [ ] Hero Section (reference: lines 82-107)
+   - [ ] Categories Grid (reference: lines 110-282)
+   - [ ] Testimonials (reference: lines 285-315)
+
+5. **Interactive Features**
+   - [ ] Authentication modals
+   - [ ] Form validation
+   - [ ] Testimonial carousel
+
+## 🛠️ Recommended Libraries
+
+### State Management
+```bash
+# For simple state
+npm install zustand
+
+# For complex state
+npm install @reduxjs/toolkit react-redux
+```
+
+### Forms & Validation
+```bash
+npm install react-hook-form @hookform/resolvers yup
+```
+
+### Animations
+```bash
+npm install framer-motion
+# OR
+npm install react-spring
+```
+
+### UI Utilities
+```bash
+npm install clsx           # Conditional classes (essential for CSS Modules)
+npm install react-intersection-observer  # Scroll animations
+```
+
+### CSS Modules Specific
+```bash
+# TypeScript support for CSS Modules
+npm install -D typescript-plugin-css-modules
+
+# Optional: CSS Modules class name generation
+npm install -D @types/css-modules
+```
+
+## 🎨 Design System Implementation
+
+### Colors
+Extract from `design/css/variables.css`:
+- Primary: `#FF6B35` 
+- Gradients: `linear-gradient(135deg, #FF6B35 0%, #E55A2E 100%)`
+- Category colors: 11 unique pastel colors
+
+### Typography  
+- Font: Inter (Google Fonts)
+- Scale: 8 font sizes (caption to h1)
+- Weights: 300-800
+
+### Spacing
+- 8px base system
+- 13 spacing values (4px to 128px)
+
+## 📱 Responsive Implementation
+
+### Breakpoints (from `design/css/variables.css`)
+```typescript
+export const breakpoints = {
+  sm: '640px',   // Small tablets
+  md: '768px',   // Tablets  
+  lg: '1024px',  // Small desktop
+  xl: '1280px',  // Large desktop
+  '2xl': '1536px' // Ultra-wide
+}
+```
+
+### Mobile-First Approach
+- Start with mobile design
+- Use min-width media queries
+- Reference `design/css/responsive.css` for exact breakpoints
+
+## 🔍 Reference Usage
+
+### HTML Structure
+Use `design/index.html` as your component structure guide:
+- Semantic HTML elements
+- ARIA labels and accessibility
+- Class naming conventions
+
+### Styling Reference for CSS Modules
+Adapt styles from `design/css/` files to CSS Modules:
+
+1. **`design/css/variables.css`** → `src/styles/variables.module.css`
+   - Copy CSS custom properties as-is
+   - Import in components that need design tokens
+
+2. **`design/css/components.css`** → Individual `Component.module.css` files
+   - Split component styles into separate files
+   - Convert BEM-style classes to CSS Modules classes
+   - Example: `.btn--primary` → `.primary`
+
+3. **`design/css/layout.css`** → `src/styles/layout.module.css`
+   - Page-level layout styles
+   - Grid systems and containers
+
+4. **`design/css/responsive.css`** → Include in component modules
+   - Add media queries directly to component styles
+   - Use same breakpoint values from reference
+
+**Example Conversion:**
+```css
+/* From design/css/components.css */
+.btn { /* base styles */ }
+.btn--primary { /* variant styles */ }
+.btn--sm { /* size styles */ }
+
+/* To Component.module.css */
+.btn { /* base styles */ }
+.primary { /* variant styles */ }
+.sm { /* size styles */ }
+```
+
+### JavaScript Logic
+Use `design/js/main.js` for:
+- Modal functionality patterns
+- Form validation logic
+- Carousel implementation
+- Event handling patterns
+
+## 🎯 Key Features to Implement
+
+### Authentication Flow
+- Sign in/sign up modals
+- Form validation with real-time feedback
+- Password visibility toggle
+- User state management
+
+### Interactive Elements
+- Category cards with hover effects
+- Testimonial carousel with dots
+- Scroll animations
+- Mobile-responsive navigation
+
+### Accessibility
+- Skip links
+- Keyboard navigation
+- ARIA labels
+- Focus management
+- Screen reader support
+
+## ⚡ Quick Commands
+
+```bash
+# Start development
+cd design && python3 -m http.server 8000  # View reference
+cd foodies-react && npm start              # Start React dev
+
+# Build for production
+npm run build
+
+# Test accessibility
+npm install -g @axe-core/cli
+axe http://localhost:3000
+```
+
+## 📚 Additional Resources
+
+- **Figma URL**: https://www.figma.com/design/TKl7kDNvwtz62RsuWNnQ5E/Foodies?node-id=0-1
+- **Reference Implementation**: `design/` directory
+- **React Documentation**: [React.dev](https://react.dev)
+- **TypeScript Guide**: [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+---
+
+Your pixel-perfect reference implementation is ready! Use the `design/` directory as your single source of truth for building the React version.
+
+**Happy coding! 🚀**

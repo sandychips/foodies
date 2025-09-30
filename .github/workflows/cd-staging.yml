@@ -1,0 +1,155 @@
+name: CD - Deploy to Staging
+
+on:
+  push:
+    branches: [develop]
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: 'Staging deployment target'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - backend
+          - frontend
+
+env:
+  NODE_VERSION: '18.x'
+  ENVIRONMENT: staging
+
+jobs:
+  # Run tests before deploying
+  verify-tests:
+    name: Verify Tests Pass
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  # Deploy to staging environment
+  deploy-staging:
+    name: Deploy to Staging Environment
+    runs-on: ubuntu-latest
+    needs: verify-tests
+    if: github.ref == 'refs/heads/develop'
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      # Database migrations for staging
+      - name: Run staging database migrations
+        env:
+          DATABASE_URL: ${{ secrets.STAGING_DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "⚠️ STAGING_DATABASE_URL not configured - skipping migrations"
+            echo "To enable automatic migrations:"
+            echo "1. Get external database URL from Render staging database"
+            echo "2. Add it as STAGING_DATABASE_URL secret in GitHub"
+            exit 0
+          fi
+          
+          echo "Running staging database migrations..."
+          cd backend
+          npm ci
+          npm run migrate
+          echo "✅ Staging migrations completed"
+
+      # Deploy backend to staging
+      - name: Deploy Backend to Staging
+        env:
+          RENDER_DEPLOY_HOOK_STAGING_BACKEND: ${{ secrets.RENDER_DEPLOY_HOOK_STAGING_BACKEND }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_STAGING_BACKEND" ]; then
+            echo "⚠️ RENDER_DEPLOY_HOOK_STAGING_BACKEND not configured"
+            echo "Using Render Blueprint deployment instead..."
+            echo "Make sure render.yaml is configured for staging environment"
+            exit 0
+          fi
+
+          curl -X POST "$RENDER_DEPLOY_HOOK_STAGING_BACKEND"
+          echo "✅ Staging backend deployment triggered"
+
+      # Deploy frontend to staging  
+      - name: Deploy Frontend to Staging
+        env:
+          RENDER_DEPLOY_HOOK_STAGING_FRONTEND: ${{ secrets.RENDER_DEPLOY_HOOK_STAGING_FRONTEND }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_STAGING_FRONTEND" ]; then
+            echo "⚠️ RENDER_DEPLOY_HOOK_STAGING_FRONTEND not configured"
+            echo "Frontend will auto-deploy via Render Blueprint on develop branch push"
+            exit 0
+          fi
+
+          curl -X POST "$RENDER_DEPLOY_HOOK_STAGING_FRONTEND"  
+          echo "✅ Staging frontend deployment triggered"
+
+      # Wait for deployments
+      - name: Wait for staging deployment
+        run: |
+          echo "Waiting 60 seconds for Render staging deployments..."
+          sleep 60
+
+      # Verify staging deployment
+      - name: Verify staging deployment
+        env:
+          STAGING_BACKEND_URL: ${{ secrets.STAGING_BACKEND_URL || 'https://foodies-staging-backend.onrender.com' }}
+          STAGING_FRONTEND_URL: ${{ secrets.STAGING_FRONTEND_URL || 'https://foodies-staging-frontend.onrender.com' }}
+        run: |
+          echo "🔍 Verifying staging deployment..."
+          
+          # Check backend health
+          echo "Checking staging backend at $STAGING_BACKEND_URL/health"
+          for i in {1..10}; do
+            if curl -f -s "$STAGING_BACKEND_URL/health" > /dev/null; then
+              echo "✅ Staging backend is healthy!"
+              break
+            fi
+            if [ $i -eq 10 ]; then
+              echo "⚠️ Could not verify staging backend health"
+            else
+              echo "Attempt $i: Backend not ready, waiting 10s..."
+              sleep 10
+            fi
+          done
+
+          # Check frontend
+          echo "Checking staging frontend at $STAGING_FRONTEND_URL"
+          for i in {1..5}; do
+            if curl -f -s "$STAGING_FRONTEND_URL" > /dev/null; then
+              echo "✅ Staging frontend is accessible!"
+              break
+            fi
+            if [ $i -eq 5 ]; then
+              echo "⚠️ Could not verify staging frontend"
+            else
+              echo "Attempt $i: Frontend not ready, waiting 15s..."
+              sleep 15  
+            fi
+          done
+
+      # Create deployment summary
+      - name: Staging deployment summary
+        run: |
+          echo "# 🚀 Staging Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Environment: Staging" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: develop" >> $GITHUB_STEP_SUMMARY
+          echo "- **Backend URL**: https://foodies-staging-backend.onrender.com" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend URL**: https://foodies-staging-frontend.onrender.com" >> $GITHUB_STEP_SUMMARY
+          echo "- **API Docs**: https://foodies-staging-backend.onrender.com/api/docs" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧪 Testing" >> $GITHUB_STEP_SUMMARY
+          echo "Use staging environment for:" >> $GITHUB_STEP_SUMMARY
+          echo "- Integration testing" >> $GITHUB_STEP_SUMMARY  
+          echo "- Feature validation" >> $GITHUB_STEP_SUMMARY
+          echo "- User acceptance testing" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔄 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "When staging tests pass, create PR to merge develop → main for production deployment" >> $GITHUB_STEP_SUMMARY

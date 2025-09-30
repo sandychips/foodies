@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test App Loading</title>
+</head>
+<body>
+    <h1>Testing Frontend App Loading</h1>
+    <div id="result"></div>
+    <script>
+        async function testAppLoading() {
+            const resultDiv = document.getElementById('result');
+
+            try {
+                resultDiv.innerHTML = 'Testing frontend app loading...';
+
+                // Test main page
+                const response = await fetch('http://localhost:3002/');
+                const html = await response.text();
+
+                if (html.includes('id="root"') && html.includes('src="/src/main.jsx"')) {
+                    resultDiv.innerHTML = `
+                        <h2 style="color: green;">✅ Frontend App Loading Test PASSED!</h2>
+                        <p>✅ Main HTML structure correct</p>
+                        <p>✅ Root element present</p>
+                        <p>✅ Main.jsx script tag present</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `
+                        <h2 style="color: orange;">⚠️ Frontend App Structure Issue</h2>
+                        <p>HTML structure may have issues</p>
+                    `;
+                }
+
+                // Test SPA routing
+                const routeResponse = await fetch('http://localhost:3002/recipe/123');
+                const routeHtml = await routeResponse.text();
+
+                if (routeHtml.includes('id="root"')) {
+                    resultDiv.innerHTML += '<p>✅ SPA routing fallback working</p>';
+                } else {
+                    resultDiv.innerHTML += '<p>❌ SPA routing fallback not working</p>';
+                }
+
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <h2 style="color: red;">❌ App Loading Test Failed!</h2>
+                    <p><strong>Error:</strong> ${error.message}</p>
+                `;
+            }
+        }
+
+        // Test automatically when page loads
+        window.onload = testAppLoading;
+    </script>
+</body>
+</html>

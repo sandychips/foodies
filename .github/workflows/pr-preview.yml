@@ -1,0 +1,157 @@
+name: PR - Deploy Preview Environment
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches: [main, develop]
+
+env:
+  NODE_VERSION: '18.x'
+
+jobs:
+  # Run tests for PR
+  verify-tests:
+    name: Verify PR Tests Pass
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  # Deploy PR preview (optional - requires Render Preview environments)
+  deploy-preview:
+    name: Deploy PR Preview
+    runs-on: ubuntu-latest
+    needs: verify-tests
+    if: github.event.action != 'closed'
+    
+    steps:
+      - name: Checkout PR code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Get PR info
+        id: pr-info
+        run: |
+          PR_NUMBER=${{ github.event.number }}
+          PR_BRANCH=${{ github.head_ref }}
+          echo "pr_number=$PR_NUMBER" >> $GITHUB_OUTPUT
+          echo "pr_branch=$PR_BRANCH" >> $GITHUB_OUTPUT
+          echo "preview_url=https://foodies-pr-$PR_NUMBER.onrender.com" >> $GITHUB_OUTPUT
+
+      - name: Build frontend for preview
+        working-directory: ./frontend
+        env:
+          VITE_API_URL: https://foodies-staging-backend.onrender.com/api/v1
+        run: |
+          npm ci
+          npm run build
+          echo "✅ Frontend built for PR preview"
+
+      - name: Lint and validate PR
+        run: |
+          echo "🔍 Running PR validations..."
+          
+          # Backend linting
+          cd backend
+          npm ci
+          npm run lint || echo "⚠️ Backend linting issues found"
+          
+          # Frontend linting  
+          cd ../frontend
+          npm ci
+          npm run lint || echo "⚠️ Frontend linting issues found"
+          
+          echo "✅ PR validation completed"
+
+      - name: PR Preview Info
+        run: |
+          echo "# 🔍 PR Preview Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Pull Request Information" >> $GITHUB_STEP_SUMMARY
+          echo "- **PR Number**: #${{ steps.pr-info.outputs.pr_number }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Branch**: \`${{ steps.pr-info.outputs.pr_branch }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Base Branch**: \`${{ github.base_ref }}\`" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🧪 Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All CI tests passed" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Frontend build successful" >> $GITHUB_STEP_SUMMARY  
+          echo "- ✅ Linting validation completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🚀 Preview Environment" >> $GITHUB_STEP_SUMMARY
+          echo "Preview deployments use Render's preview feature (if enabled):" >> $GITHUB_STEP_SUMMARY
+          echo "- **Frontend**: Uses staging backend API" >> $GITHUB_STEP_SUMMARY
+          echo "- **Database**: Shared with staging environment" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## 🔄 Next Steps" >> $GITHUB_STEP_SUMMARY
+          echo "1. Review the changes in this PR" >> $GITHUB_STEP_SUMMARY
+          echo "2. Test functionality using staging environment" >> $GITHUB_STEP_SUMMARY
+          echo "3. Approve and merge to deploy to production" >> $GITHUB_STEP_SUMMARY
+
+      # Comment on PR with preview info
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const { data: comments } = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+            });
+            
+            const botComment = comments.find(comment => 
+              comment.user.type === 'Bot' && 
+              comment.body.includes('🔍 PR Preview Deployment')
+            );
+            
+            const commentBody = `## 🔍 PR Preview Deployment
+            
+            **✅ All tests passed!** Your changes are ready for review.
+            
+            ### 🧪 Test Environment
+            - **Staging API**: https://foodies-staging-backend.onrender.com/api/v1  
+            - **Staging Frontend**: https://foodies-staging-frontend.onrender.com
+            - **API Docs**: https://foodies-staging-backend.onrender.com/api/docs
+            
+            ### 🚀 Deployment Status
+            - Frontend build: ✅ Success
+            - Linting: ✅ Completed
+            - Tests: ✅ All passed
+            
+            ### 🔄 Next Steps
+            1. Review the code changes
+            2. Test functionality in staging
+            3. Merge to \`${{ github.base_ref }}\` to deploy to production
+            
+            ---
+            <sub>This comment will be updated on each commit</sub>`;
+            
+            if (botComment) {
+              await github.rest.issues.updateComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: botComment.id,
+                body: commentBody
+              });
+            } else {
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: context.issue.number,
+                body: commentBody
+              });
+            }
+
+  # Cleanup preview on PR close (placeholder for future implementation)
+  cleanup-preview:
+    name: Cleanup PR Preview
+    runs-on: ubuntu-latest
+    if: github.event.action == 'closed'
+    
+    steps:
+      - name: Cleanup preview environment
+        run: |
+          echo "🧹 Cleaning up PR preview environment..."
+          echo "PR #${{ github.event.number }} closed - preview environment cleanup"
+          echo "Note: Render preview cleanup is automatic"

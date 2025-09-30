@@ -1,0 +1,111 @@
+.inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 40px 0;
+}
+
+.logoFooter {
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.logoFooter svg {
+  width: 69px;
+  height: 24px;
+  fill: var(--main);
+  transition: fill 0.3s ease, transform 0.3s ease;
+}
+
+.logoFooter:active {
+  transform: scale(1.2);
+}
+
+.logoFooter:hover,
+.logoFooter:focus {
+  outline: none;
+}
+
+.divider {
+  stroke-width: 1px;
+  stroke: var(--gray);
+  margin: 0;
+}
+
+.copy {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: #1a1a1a;
+  padding: 40px 0 16px;
+}
+
+.networkLinks {
+  display: flex;
+  list-style: none;
+  gap: 16px;
+  margin: 0;
+}
+
+.networkLinks a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1px solid var(--gray);
+  border-radius: 100px;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.networkLinks a:hover {
+  background-color: #000;
+  transform: scale(1.2);
+}
+
+.networkLinks a:hover svg {
+  fill: #fff;
+}
+
+.networkLinks svg {
+  width: 20px;
+  height: 20px;
+  fill: var(--main);
+}
+
+@media screen and (min-width: 768px) {
+  .inner {
+    padding: 100px 0 40px;
+  }
+
+  .logoFooter svg {
+    width: 83px;
+    height: 28px;
+  }
+
+  .networkLinks a {
+    width: 40px;
+    height: 40px;
+  }
+
+  .copy {
+    font-size: 16px;
+    line-height: 150%;
+    padding-bottom: 40px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .inner {
+    padding: 120px 0 40px;
+  }
+
+  .copy {
+    padding-bottom: 40px;
+  }
+}

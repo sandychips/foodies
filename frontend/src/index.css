@@ -1,0 +1,159 @@
+@import "modern-css-reset";
+
+/* import font */
+@import url("https://fonts.googleapis.com/css2?family=Mulish:wght@400;700;800&display=swap");
+
+:root {
+  font-family: "Mulish", sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(5, 5, 5, 1);
+  /*color: rgba(255, 255, 255, 0.87);*/
+  background-color: #fff;
+
+  /* кольорова схема з Figma */
+  --main: rgba(5, 5, 5, 1);
+  --black-light: rgba(26, 26, 26, 1);
+  --gray: rgba(191, 190, 190, 1);
+  --white: rgba(255, 255, 255, 1);
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: white;
+}
+
+body {
+  margin: 0;
+}
+
+h1 {
+  font-size: 40px;
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h2 {
+  font-size: 28px;
+  line-height: 1.14286;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: 18px;
+  line-height: 1.33333;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+h4 {
+  font-size: 20px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+  border-color: white;
+}
+
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  h1 {
+    font-size: 90px;
+  }
+
+  h2 {
+    font-size: 40px;
+    line-height: 1.1;
+  }
+
+  h3 {
+    font-size: 24px;
+    line-height: 1.16667;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 10px;
+  padding: 8px 16px;
+  background-color: #050505;
+  color: #ffffff;
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: 16px;
+}
+
+@media only screen and (min-width: 768px) {
+  .container {
+    padding: 0 32px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .container {
+    padding: 0 80px;
+  }
+}
+
+/* Remove outline from all elements for all states */
+* {
+  outline: none;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+}
+
+button:hover,
+button:focus,
+button:active {
+  outline: none;
+}

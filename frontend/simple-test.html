@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple React Test</title>
+    <script type="module">
+        // Simple test to see if React loads
+        async function testReactLoad() {
+            const result = document.getElementById('result');
+            try {
+                // Create a simple iframe pointing to the React app
+                const iframe = document.createElement('iframe');
+                iframe.src = 'http://localhost:3002/';
+                iframe.style.width = '800px';
+                iframe.style.height = '400px';
+                iframe.style.border = '1px solid #ccc';
+
+                // Set up message listener for communication
+                window.addEventListener('message', function(event) {
+                    if (event.data.type === 'APP_STATUS') {
+                        result.innerHTML += `<br>Status from app: ${event.data.message}`;
+                    }
+                });
+
+                iframe.onload = function() {
+                    setTimeout(() => {
+                        try {
+                            // Try to inject a test script into the iframe
+                            const iframeWindow = iframe.contentWindow;
+                            if (iframeWindow) {
+                                // Send a test message back
+                                const testScript = `
+                                    const rootElement = document.getElementById('root');
+                                    const hasContent = rootElement && rootElement.innerHTML.trim() !== '';
+                                    window.parent.postMessage({
+                                        type: 'APP_STATUS',
+                                        message: hasContent ? 'React app rendered content' : 'React app root is empty (white screen)',
+                                        hasContent: hasContent,
+                                        rootHTML: rootElement ? rootElement.innerHTML.substring(0, 100) : 'No root element'
+                                    }, '*');
+                                `;
+
+                                // Try to execute the test script
+                                iframeWindow.eval(testScript);
+                            }
+                        } catch (e) {
+                            result.innerHTML += '<br>⚠️ Cannot access iframe (CORS/Security)';
+                        }
+                    }, 3000); // Wait 3 seconds for React to load
+                };
+
+                iframe.onerror = function() {
+                    result.innerHTML += '<br>❌ Failed to load React app in iframe';
+                };
+
+                document.body.appendChild(iframe);
+                result.innerHTML = '🔄 Loading React app in iframe below...<br>Waiting for app to render...';
+
+            } catch (error) {
+                result.innerHTML = `❌ Test error: ${error.message}`;
+            }
+        }
+
+        window.onload = testReactLoad;
+    </script>
+</head>
+<body>
+    <h1>Simple React App Test</h1>
+    <div id="result">Initializing test...</div>
+    <br>
+    <!-- The iframe will be added here -->
+</body>
+</html>

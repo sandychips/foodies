@@ -1,0 +1,157 @@
+.card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--gray);
+  margin-top: 40px;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.avatarLink {
+  display: block;
+  flex-shrink: 0;
+}
+
+.avatar {
+  width: 85px;
+  height: 85px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nameLink {
+  text-decoration: none;
+  color: #222;
+}
+
+.name {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
+}
+
+.recipesCount {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  color: var(--gray);
+}
+
+.recipesSection {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.recipesList {
+  display: none;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.recipesList li {
+  flex-shrink: 0;
+}
+
+.recipeThumb {
+  border-radius: 15px;
+  width: 100px;
+  height: 100px;
+}
+
+.viewAllBtn {
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 12px;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-start;
+  margin-left: auto;
+}
+
+.viewAllBtnIcon {
+  width: 16px;
+  height: 16px;
+  stroke: var(--main);
+  fill: none;
+}
+
+.viewAllBtn:hover {
+  background: var(--main);
+}
+
+.viewAllBtn:hover .viewAllBtnIcon {
+  stroke: var(--white);
+}
+
+@media (min-width: 1440px) {
+  .card {
+    gap: 60px;
+  }
+}
+
+@media (min-width: 768px) {
+  .recipesList {
+    display: flex;
+  }
+}
+
+@media (max-width: 767px) {
+  .noRecipes,
+  .recipesList {
+    display: none;
+  }
+}
+
+.followBtn,
+.followingBtn {
+  background: var(--white);
+  display: inline-flex;
+  border: 1px solid var(--gray);
+  border-radius: 30px;
+  padding: 10px 24px;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--main);
+}
+
+.followBtn:hover,
+.followingBtn:hover {
+  background: var(--main);
+  color: var(--white);
+  border-color: var(--main);
+}
+
+.noRecipes {
+  color: var(--gray);
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}

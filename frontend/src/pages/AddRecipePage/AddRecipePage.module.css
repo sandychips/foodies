@@ -1,0 +1,38 @@
+.addRecipeContainer {
+  margin-top: 64px;
+  min-height: 65vh;
+}
+
+.subtitle {
+  font-size: 14px;
+  line-height: 20px;
+  letter-spacing: -2%;
+  font-weight: 500;
+  color: #bfbebe;
+  margin-top: 16px;
+}
+
+.maintitle {
+  font-size: 28px;
+  line-height: 32px;
+  letter-spacing: -2%;
+  font-weight: 800;
+  text-transform: uppercase;
+  margin-top: 32px;
+}
+
+@media (min-width: 768px) {
+  .subtitle {
+    color: #1a1a1a;
+    line-height: 24px;
+    font-size: 16px;
+    max-width: 443px;
+    margin-top: 16px;
+  }
+
+  .maintitle {
+    font-size: 40px;
+    line-height: 44px;
+    margin-top: 40px;
+  }
+}

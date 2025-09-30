@@ -1,0 +1,36 @@
+.pathInfo {
+  margin-top: 64px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  justify-content: flex-start;
+  text-transform: uppercase;
+}
+
+.pathInfoLink {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--gray);
+}
+
+.pathInfoLink:hover {
+  color: var(--main);
+}
+
+.pathInfoSeparator {
+  color: var(--gray);
+}
+
+.pathInfoCurrentPage {
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1.5;
+  letter-spacing: -0.02em;
+  color: var(--main);
+}

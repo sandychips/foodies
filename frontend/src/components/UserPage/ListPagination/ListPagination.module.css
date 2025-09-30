@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  gap: 8px;
+  margin: 20px 0;
+  justify-content: center;
+}
+.pageBtn {
+  padding: 4px 12px;
+  border: 1px solid #ccc;
+  background: white;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.pageBtnActive {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.paginationContainer {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+  justify-content: center;
+}
+
+.paginationItem,
+.break {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.paginationItem {
+  cursor: pointer;
+}
+
+.paginationItemActive {
+  border: 1px solid var(--main);
+  border-radius: 100px;
+}
+
+.pageLink,
+.breakLink {
+  width: 100%;
+  height: 100%;
+  font-size: 14px;
+  line-height: 1.43;
+  letter-spacing: -0.02em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul{
+  list-style: none;
+}

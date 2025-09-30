@@ -1,0 +1,80 @@
+.tabsWrapper {
+  position: relative;
+  display: flex;
+  gap: 30px;
+  border-bottom: 1px solid #e0e0e0;
+  padding-top: 32px;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.tabsWrapper::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex: 0 0 auto;
+  padding: 14px 0;
+  font-family: var(--font-family);
+  font-weight: 800;
+  font-size: 18px;
+  line-height: 133%;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  color: var(--gray);
+  background: none;
+  border: none;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.indicator {
+  position: absolute;
+  bottom: 0;
+  height: 3px;
+  background-color: var(--main);
+  transition: left 0.3s ease, width 0.3s ease;
+}
+
+.emptyMessage {
+  font-family: var(--font-family);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 143%;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--gray);
+  padding-top: 80px;
+}
+
+@media screen and (min-width: 768px) {
+  .tabsWrapper {
+    justify-content: flex-start;
+    padding-top: 40px;
+    gap: 40px;
+  }
+
+  .tab {
+    font-size: 20px;
+    line-height: 120%;
+    color: var(--main);
+  }
+
+  .emptyMessage {
+    font-size: 16px;
+    line-height: 150%;
+    color: #1a1a1a;
+    padding-top: 100px;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .tabsWrapper {
+    padding-top: 0;
+    gap: 56px;
+  }
+
+  .emptyMessage {
+    padding-top: 140px;
+  }
+}

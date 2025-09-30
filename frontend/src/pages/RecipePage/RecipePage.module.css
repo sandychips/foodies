@@ -1,0 +1,34 @@
+.recipePage {
+  display: flex;
+}
+
+main {
+  display: flex;
+  margin: 48px auto;
+  width: 1440px;
+  gap: 48px;
+  color: black;
+}
+
+.noOptions {
+  color: red;
+  font-size: 48px;
+}
+
+.loadMoreButton {
+  border: 1px solid #dadde1;
+  border-radius: 200px;
+  width: 145px;
+  height: 56px;
+  background: transparent;
+  color: black;
+  margin-top: 40px;
+  margin: 40px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.loadMoreButton:hover {
+  background: gainsboro;
+}

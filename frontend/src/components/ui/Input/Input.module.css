@@ -1,0 +1,101 @@
+/**
+ * Input Component Styles
+ */
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.formLabel {
+  font-size: var(--font-size-body-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-700);
+}
+
+.required {
+  color: var(--color-error);
+}
+
+.formInput {
+  height: var(--input-height);
+  padding: 0 var(--input-padding-x);
+  border: var(--input-border-width) solid var(--input-border-color);
+  border-radius: var(--border-radius-2xl);
+  background: var(--color-white);
+  color: var(--color-gray-900);
+  font-size: var(--font-size-body);
+  font-family: var(--font-family-primary);
+  transition: var(--transition-colors);
+}
+
+.formInput::placeholder {
+  color: var(--color-gray-500);
+}
+
+.formInput:focus {
+  outline: none;
+  border-color: var(--input-border-color-focus);
+  box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.1);
+}
+
+.formInput:disabled {
+  background: var(--color-gray-100);
+  color: var(--color-gray-500);
+  cursor: not-allowed;
+}
+
+.formInputError {
+  border-color: var(--color-error);
+}
+
+.formInputError:focus {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+.formInputGroup {
+  position: relative;
+}
+
+.formInputGroup .formInput {
+  padding-right: 3rem;
+}
+
+.formInputToggle {
+  position: absolute;
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--color-gray-500);
+  cursor: pointer;
+  padding: var(--space-1);
+  transition: var(--transition-colors);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.formInputToggle:hover {
+  color: var(--color-gray-700);
+}
+
+.formInputToggle:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: var(--border-radius-sm);
+}
+
+.eyeIcon {
+  width: 1rem;
+  height: 1rem;
+}
+
+.formError {
+  font-size: var(--font-size-body-small);
+  color: var(--color-error);
+  margin-top: var(--space-1);
+}

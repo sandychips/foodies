@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Test</title>
+    <script src="https://unpkg.com/puppeteer@latest/lib/esm/puppeteer-core.js" type="module"></script>
+</head>
+<body>
+    <h1>Testing Frontend App - Minimal Check</h1>
+    <div id="result">Testing...</div>
+
+    <script>
+        async function testMinimal() {
+            const result = document.getElementById('result');
+
+            try {
+                // Test if we can at least fetch the main HTML
+                const response = await fetch('http://localhost:3002/');
+                const html = await response.text();
+
+                // Check basic structure
+                if (html.includes('id="root"') && html.includes('main.jsx')) {
+                    result.innerHTML = '✅ Basic HTML structure correct<br>';
+                } else {
+                    result.innerHTML = '❌ HTML structure issue<br>';
+                    return;
+                }
+
+                // Test main.jsx directly
+                const mainResponse = await fetch('http://localhost:3002/src/main.jsx');
+                if (mainResponse.ok) {
+                    result.innerHTML += '✅ Main.jsx accessible<br>';
+                    const mainContent = await mainResponse.text();
+                    if (mainContent.includes('createRoot') && mainContent.includes('App')) {
+                        result.innerHTML += '✅ Main.jsx contains React setup<br>';
+                    } else {
+                        result.innerHTML += '❌ Main.jsx missing React setup<br>';
+                    }
+                } else {
+                    result.innerHTML += '❌ Cannot access main.jsx<br>';
+                }
+
+                // Test App.jsx
+                const appResponse = await fetch('http://localhost:3002/src/App.jsx');
+                if (appResponse.ok) {
+                    result.innerHTML += '✅ App.jsx accessible<br>';
+                } else {
+                    result.innerHTML += '❌ Cannot access App.jsx<br>';
+                }
+
+                // Check if any of the lazy-loaded components cause issues
+                const homeResponse = await fetch('http://localhost:3002/src/pages/HomePage/HomePage.jsx');
+                if (homeResponse.ok) {
+                    result.innerHTML += '✅ HomePage component accessible<br>';
+                    const homeContent = await homeResponse.text();
+                    if (homeContent.includes('export default')) {
+                        result.innerHTML += '✅ HomePage has default export<br>';
+                    } else {
+                        result.innerHTML += '⚠️ HomePage missing default export<br>';
+                    }
+                } else {
+                    result.innerHTML += '❌ Cannot access HomePage component<br>';
+                }
+
+                result.innerHTML += '<br><strong>Diagnosis:</strong> ';
+                result.innerHTML += 'Frontend resources are accessible. The white screen might be due to:<br>';
+                result.innerHTML += '1. JavaScript errors during execution<br>';
+                result.innerHTML += '2. Redux store initialization issues<br>';
+                result.innerHTML += '3. Component rendering errors<br>';
+                result.innerHTML += '4. Missing environment variables<br>';
+                result.innerHTML += '<br>Recommended: Check browser developer console for JavaScript errors.';
+
+            } catch (error) {
+                result.innerHTML = `❌ Test failed: ${error.message}`;
+            }
+        }
+
+        window.onload = testMinimal;
+    </script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+.pagination {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  margin: 0 auto;
+}
+.pageBtn {
+  width: 40px;
+  height: 40px;
+  color: var(--main);
+  cursor: pointer;
+  background: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pageBtnActive {
+  border: 1px solid var(--gray);
+  border-radius: 100%;
+}

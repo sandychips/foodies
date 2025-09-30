@@ -1,0 +1,103 @@
+.ingredientsTitle {
+  font-size: 18px;
+  font-weight: 800;
+  line-height: 24px;
+  letter-spacing: -0.36px;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  text-align: left;
+  color: #050505;
+}
+
+.ingredientsList {
+  padding: 0;
+  margin: 0;
+  /* display: flex;
+    flex-wrap: wrap;
+    gap: 16px; */
+
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.ingredientsItem {
+  display: flex;
+  /* flex: 0 0 calc(50% - 16px); */
+  align-items: center;
+  font-size: 14px;
+  line-height: 143%;
+  gap: 10px;
+}
+
+.ingredientsInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ingredientsImg {
+  width: 75px;
+  height: 75px;
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid var(--gray);
+}
+
+.ingredientsPlaceholder {
+  width: 75px;
+  height: 75px;
+  border-radius: 15px;
+  border: 1px solid var(--gray);
+  background: linear-gradient(135deg, rgba(191, 190, 190, 0.3), rgba(191, 190, 190, 0.1));
+}
+
+.ingredientsName {
+  color: var(--main);
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+}
+
+.ingredientsMeasure {
+  color: var(--gray);
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: -0.28px;
+}
+
+@media only screen and (min-width: 768px) {
+  .ingredientsTitle {
+    font-size: 20px;
+    line-height: 24px;
+    letter-spacing: -0.48px;
+    margin-bottom: 20px;
+  }
+
+  .ingredientsList {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+
+  .ingredientsImg {
+    width: 90px;
+    height: 90px;
+  }
+  .ingredientsPlaceholder {
+    width: 90px;
+    height: 90px;
+  }
+  .ingredientsItem {
+    /* flex: 0 0 calc(50% - 16px); */
+
+    gap: 14px;
+  }
+  .ingredientsName {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  .ingredientsMeasure {
+    font-size: 16px;
+    line-height: 24px;
+  }
+}

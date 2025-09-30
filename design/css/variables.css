@@ -1,0 +1,271 @@
+/**
+ * CSS Custom Properties - Design System Variables
+ * Based on Figma "Foodies" design
+ */
+
+:root {
+    /* ================================
+     * Colors
+     * ================================ */
+    
+    /* Primary Brand Colors */
+    --color-primary: #FF6B35;          /* Main orange/red gradient start */
+    --color-primary-dark: #E55A2E;     /* Darker variation */
+    --color-primary-light: #FF8A65;    /* Lighter variation */
+    
+    /* Grayscale */
+    --color-white: #FFFFFF;
+    --color-black: #000000;
+    --color-gray-50: #FAFAFA;
+    --color-gray-100: #F5F5F5;
+    --color-gray-200: #EEEEEE;
+    --color-gray-300: #E0E0E0;
+    --color-gray-400: #BDBDBD;
+    --color-gray-500: #9E9E9E;
+    --color-gray-600: #757575;
+    --color-gray-700: #616161;
+    --color-gray-800: #424242;
+    --color-gray-900: #212121;
+    
+    /* Semantic Colors */
+    --color-success: #4CAF50;
+    --color-error: #F44336;
+    --color-warning: #FF9800;
+    --color-info: #2196F3;
+    
+    /* Category Colors (from Figma fills) */
+    --color-category-beef: #FFE4E1;
+    --color-category-breakfast: #FFF8DC;
+    --color-category-desserts: #F0E6FF;
+    --color-category-lamb: #E8F5E8;
+    --color-category-goat: #FFE4B5;
+    --color-category-miscellaneous: #E6F3FF;
+    --color-category-pasta: #FFF0F5;
+    --color-category-pork: #F5F5DC;
+    --color-category-seafood: #E0F6FF;
+    --color-category-side: #F0FFF0;
+    --color-category-starter: #FFF5EE;
+    
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, #FF6B35 0%, #E55A2E 100%);
+    --gradient-hero: linear-gradient(135deg, #FF6B35 0%, #FF8A65 50%, #E55A2E 100%);
+    
+    /* ================================
+     * Typography
+     * ================================ */
+    
+    /* Font Family */
+    --font-family-primary: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    
+    /* Font Weights */
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+    --font-weight-extrabold: 800;
+    --font-weight-black: 900;
+    
+    /* Font Sizes - Desktop/Tablet */
+    --font-size-h1: 3.5rem;            /* 56px - Hero title */
+    --font-size-h2: 2.5rem;            /* 40px - Section titles */
+    --font-size-h3: 2rem;              /* 32px */
+    --font-size-h4: 1.5rem;            /* 24px */
+    --font-size-h5: 1.25rem;           /* 20px */
+    --font-size-h6: 1.125rem;          /* 18px */
+    --font-size-body-large: 1.125rem;  /* 18px - Main text */
+    --font-size-body: 1rem;            /* 16px - Regular text */
+    --font-size-body-small: 0.875rem;  /* 14px - Small text */
+    --font-size-caption: 0.75rem;      /* 12px - Captions */
+    
+    /* Line Heights */
+    --line-height-tight: 1.2;
+    --line-height-normal: 1.5;
+    --line-height-relaxed: 1.75;
+    
+    /* Letter Spacing */
+    --letter-spacing-tight: -0.025em;
+    --letter-spacing-normal: 0;
+    --letter-spacing-wide: 0.025em;
+    
+    /* ================================
+     * Spacing
+     * ================================ */
+    
+    /* Base spacing unit (8px) */
+    --space-1: 0.25rem;    /* 4px */
+    --space-2: 0.5rem;     /* 8px */
+    --space-3: 0.75rem;    /* 12px */
+    --space-4: 1rem;       /* 16px */
+    --space-5: 1.25rem;    /* 20px */
+    --space-6: 1.5rem;     /* 24px */
+    --space-8: 2rem;       /* 32px */
+    --space-10: 2.5rem;    /* 40px */
+    --space-12: 3rem;      /* 48px */
+    --space-16: 4rem;      /* 64px */
+    --space-20: 5rem;      /* 80px */
+    --space-24: 6rem;      /* 96px */
+    --space-32: 8rem;      /* 128px */
+    
+    /* Container & Layout */
+    --container-max-width: 1200px;
+    --container-padding: 1rem;
+    --section-padding-y: 5rem;
+    --section-padding-y-small: 3rem;
+    
+    /* ================================
+     * Border Radius
+     * ================================ */
+    
+    --border-radius-sm: 0.5rem;    /* 8px */
+    --border-radius-md: 0.75rem;   /* 12px */
+    --border-radius-lg: 1rem;      /* 16px */
+    --border-radius-xl: 1.5rem;    /* 24px */
+    --border-radius-2xl: 1.875rem; /* 30px - Main elements */
+    --border-radius-full: 9999px;  /* Fully rounded */
+    
+    /* ================================
+     * Shadows
+     * ================================ */
+    
+    --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    --shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+    --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+    --shadow-2xl: 0 25px 50px -12px rgb(0 0 0 / 0.25);
+    
+    /* Custom shadows for components */
+    --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.1);
+    --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    --shadow-button: 0 2px 4px rgba(0, 0, 0, 0.1);
+    
+    /* ================================
+     * Transitions & Animations
+     * ================================ */
+    
+    --transition-fast: 150ms ease;
+    --transition-normal: 250ms ease;
+    --transition-slow: 350ms ease;
+    
+    --transition-colors: color 150ms ease, background-color 150ms ease, border-color 150ms ease;
+    --transition-transform: transform 250ms ease;
+    --transition-opacity: opacity 150ms ease;
+    
+    /* Easing functions */
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-in: cubic-bezier(0.4, 0, 1, 1);
+    
+    /* ================================
+     * Z-Index Scale
+     * ================================ */
+    
+    --z-index-dropdown: 1000;
+    --z-index-sticky: 1020;
+    --z-index-fixed: 1030;
+    --z-index-modal-backdrop: 1040;
+    --z-index-modal: 1050;
+    --z-index-popover: 1060;
+    --z-index-tooltip: 1070;
+    --z-index-toast: 1080;
+    
+    /* ================================
+     * Breakpoints (for reference in JS)
+     * ================================ */
+    
+    --breakpoint-sm: 640px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 1024px;
+    --breakpoint-xl: 1280px;
+    --breakpoint-2xl: 1536px;
+    
+    /* ================================
+     * Component-specific variables
+     * ================================ */
+    
+    /* Buttons */
+    --button-height: 3rem;
+    --button-height-sm: 2.5rem;
+    --button-height-lg: 3.5rem;
+    --button-padding-x: 1.5rem;
+    --button-padding-x-sm: 1rem;
+    --button-padding-x-lg: 2rem;
+    
+    /* Form elements */
+    --input-height: 3rem;
+    --input-padding-x: 1rem;
+    --input-border-width: 1px;
+    --input-border-color: var(--color-gray-300);
+    --input-border-color-focus: var(--color-primary);
+    
+    /* Header */
+    --header-height: 5rem;
+    --header-background: rgba(255, 255, 255, 0.95);
+    
+    /* Cards */
+    --card-padding: 1.5rem;
+    --card-background: var(--color-white);
+    --card-border-radius: var(--border-radius-2xl);
+    
+    /* Category cards - specific heights from Figma */
+    --category-card-height-1: 12rem;   /* Smaller cards */
+    --category-card-height-2: 14rem;   /* Medium cards */
+    --category-card-height-3: 16rem;   /* Larger cards */
+}
+
+/* ================================
+ * Dark mode variables (optional)
+ * ================================ */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --color-white: #121212;
+        --color-black: #FFFFFF;
+        --color-gray-50: #1E1E1E;
+        --color-gray-100: #2D2D2D;
+        --color-gray-200: #3A3A3A;
+        --color-gray-300: #484848;
+        --color-gray-400: #606060;
+        --color-gray-500: #787878;
+        --color-gray-600: #909090;
+        --color-gray-700: #A8A8A8;
+        --color-gray-800: #C0C0C0;
+        --color-gray-900: #E0E0E0;
+        
+        --header-background: rgba(18, 18, 18, 0.95);
+        --card-background: var(--color-gray-50);
+        
+        --shadow-card: 0 4px 12px rgba(0, 0, 0, 0.3);
+        --shadow-modal: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    }
+}
+
+/* ================================
+ * Mobile-specific variables
+ * ================================ */
+
+@media (max-width: 768px) {
+    :root {
+        /* Smaller font sizes for mobile */
+        --font-size-h1: 2.5rem;        /* 40px */
+        --font-size-h2: 2rem;          /* 32px */
+        --font-size-h3: 1.75rem;       /* 28px */
+        --font-size-h4: 1.25rem;       /* 20px */
+        
+        /* Adjusted spacing for mobile */
+        --section-padding-y: 3rem;
+        --section-padding-y-small: 2rem;
+        --container-padding: 1rem;
+        
+        /* Smaller component sizes */
+        --button-height: 2.75rem;
+        --input-height: 2.75rem;
+        --header-height: 4rem;
+        
+        /* Category card heights for mobile */
+        --category-card-height-1: 10rem;
+        --category-card-height-2: 11rem;
+        --category-card-height-3: 12rem;
+    }
+}

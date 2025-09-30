@@ -1,0 +1,12 @@
+.item {
+  border: none;
+  list-style: none;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 32px 0px 0px 0px;
+  gap: 32px;
+}

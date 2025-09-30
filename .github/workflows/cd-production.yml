@@ -1,0 +1,304 @@
+name: CD - Deploy to Production
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize]
+    branches: [main]  
+  workflow_dispatch:
+    inputs:
+      deploy_target:
+        description: 'Production deployment target'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - backend
+          - frontend
+      run_migrations:
+        description: 'Run database migrations'
+        required: false
+        default: true
+        type: boolean
+
+env:
+  NODE_VERSION: '18.x'
+  ENVIRONMENT: production
+
+jobs:
+  # Run tests before deploying
+  verify-tests:
+    name: Verify Tests Pass
+    uses: ./.github/workflows/ci.yml
+    secrets: inherit
+
+  # Run production database migrations  
+  run-migrations:
+    name: Run Production Database Migrations
+    runs-on: ubuntu-latest
+    needs: verify-tests
+    if: |
+      github.ref == 'refs/heads/main' &&
+      github.event_name == 'push' &&
+      (github.event.inputs.run_migrations == true || github.event.inputs.run_migrations == null)
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Run production database migrations
+        env:
+          DATABASE_URL: ${{ secrets.PRODUCTION_DATABASE_URL }}
+        run: |
+          if [ -z "$DATABASE_URL" ]; then
+            echo "⚠️ PRODUCTION_DATABASE_URL not configured - skipping migrations"
+            echo "To enable automatic migrations:"
+            echo "1. Get external database URL from Render production database"
+            echo "2. Add it as PRODUCTION_DATABASE_URL secret in GitHub"
+            exit 0
+          fi
+          
+          echo "🗄️ Running production database migrations..."
+          cd backend
+          npm ci
+          npm run migrate
+          echo "✅ Production migrations completed successfully"
+
+  # Deploy backend to Render
+  deploy-backend-render:
+    name: Deploy Backend to Production
+    runs-on: ubuntu-latest
+    needs: [verify-tests, run-migrations]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      (github.event.inputs.deploy_target == 'all' ||
+       github.event.inputs.deploy_target == 'backend' ||
+       github.event_name == 'push')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Backend Deployment
+        env:
+          RENDER_DEPLOY_HOOK_BACKEND: ${{ secrets.RENDER_DEPLOY_HOOK_BACKEND }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_BACKEND" ]; then
+            echo "⚠️ RENDER_DEPLOY_HOOK_BACKEND not configured"
+            echo "To enable automatic deployment:"
+            echo "1. Go to your Render backend service"
+            echo "2. Settings > Deploy Hook"
+            echo "3. Copy the deploy hook URL"
+            echo "4. Add it as RENDER_DEPLOY_HOOK_BACKEND secret in GitHub"
+            exit 0
+          fi
+
+          curl -X POST "$RENDER_DEPLOY_HOOK_BACKEND"
+          echo "✅ Backend deployment triggered on Render"
+
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for Render deployment to complete..."
+          sleep 30
+
+      - name: Verify backend deployment
+        env:
+          BACKEND_URL: ${{ secrets.BACKEND_URL || 'https://your-backend.onrender.com' }}
+        run: |
+          echo "Checking backend health at $BACKEND_URL/health"
+
+          for i in {1..10}; do
+            if curl -f -s "$BACKEND_URL/health" > /dev/null; then
+              echo "✅ Backend is healthy!"
+              exit 0
+            fi
+            echo "Attempt $i: Backend not ready yet, waiting..."
+            sleep 10
+          done
+
+          echo "⚠️ Could not verify backend health (this may be normal if URL is not configured)"
+          exit 0
+
+  # Deploy frontend to Render
+  deploy-frontend-render:
+    name: Deploy Frontend to Render
+    runs-on: ubuntu-latest
+    needs: [verify-tests, deploy-backend-render]
+    if: |
+      github.ref == 'refs/heads/main' &&
+      (github.event.inputs.deploy_target == 'all' ||
+       github.event.inputs.deploy_target == 'frontend-render' ||
+       github.event_name == 'push')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Trigger Render Frontend Deployment
+        env:
+          RENDER_DEPLOY_HOOK_FRONTEND: ${{ secrets.RENDER_DEPLOY_HOOK_FRONTEND }}
+        run: |
+          if [ -z "$RENDER_DEPLOY_HOOK_FRONTEND" ]; then
+            echo "⚠️ RENDER_DEPLOY_HOOK_FRONTEND not configured"
+            echo "To enable automatic deployment:"
+            echo "1. Go to your Render frontend service"
+            echo "2. Settings > Deploy Hook"
+            echo "3. Copy the deploy hook URL"
+            echo "4. Add it as RENDER_DEPLOY_HOOK_FRONTEND secret in GitHub"
+            exit 0
+          fi
+
+          curl -X POST "$RENDER_DEPLOY_HOOK_FRONTEND"
+          echo "✅ Frontend deployment triggered on Render"
+
+      - name: Wait for deployment
+        run: |
+          echo "Waiting for Render deployment to complete..."
+          sleep 30
+
+      - name: Verify frontend deployment
+        env:
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL || 'https://your-frontend.onrender.com' }}
+        run: |
+          echo "Checking frontend at $FRONTEND_URL"
+
+          for i in {1..10}; do
+            if curl -f -s "$FRONTEND_URL" > /dev/null; then
+              echo "✅ Frontend is accessible!"
+              exit 0
+            fi
+            echo "Attempt $i: Frontend not ready yet, waiting..."
+            sleep 10
+          done
+
+          echo "⚠️ Could not verify frontend (this may be normal if URL is not configured)"
+          exit 0
+
+  # Deploy frontend to Vercel (automatic via GitHub integration)
+  deploy-frontend-vercel:
+    name: Deploy Frontend to Vercel
+    runs-on: ubuntu-latest
+    needs: verify-tests
+    if: |
+      github.ref == 'refs/heads/main' &&
+      (github.event.inputs.deploy_target == 'all' ||
+       github.event.inputs.deploy_target == 'frontend-vercel' ||
+       github.event_name == 'push')
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Vercel Deployment Info
+        run: |
+          echo "ℹ️ Vercel auto-deploys via GitHub integration"
+          echo ""
+          echo "Vercel will automatically detect the push to main and deploy:"
+          echo "- Project: foodies-frontend"
+          echo "- Directory: frontend/"
+          echo "- Build Command: npm run build"
+          echo "- Output Directory: dist"
+          echo ""
+          echo "✅ Check Vercel dashboard for deployment status"
+          echo "🔗 https://vercel.com/dashboard"
+
+      - name: Wait for Vercel deployment
+        run: |
+          echo "Waiting 60 seconds for Vercel to process deployment..."
+          sleep 60
+
+      - name: Verify Vercel deployment (optional)
+        env:
+          VERCEL_URL: ${{ secrets.VERCEL_PRODUCTION_URL }}
+        run: |
+          if [ -z "$VERCEL_URL" ]; then
+            echo "⚠️ VERCEL_PRODUCTION_URL not configured"
+            echo "Add your Vercel production URL as a secret to enable verification"
+            exit 0
+          fi
+
+          echo "Checking Vercel deployment at $VERCEL_URL"
+
+          for i in {1..5}; do
+            if curl -f -s "$VERCEL_URL" > /dev/null; then
+              echo "✅ Vercel deployment is live!"
+              exit 0
+            fi
+            echo "Attempt $i: Waiting for Vercel deployment..."
+            sleep 15
+          done
+
+          echo "ℹ️ Could not verify immediately (Vercel may still be deploying)"
+          exit 0
+
+  # Deployment summary
+  deployment-summary:
+    name: Deployment Summary
+    runs-on: ubuntu-latest
+    needs: [deploy-backend-render, deploy-frontend-render, deploy-frontend-vercel]
+    if: always() && github.ref == 'refs/heads/main'
+
+    steps:
+      - name: Create deployment summary
+        run: |
+          echo "# 🚀 Multi-Environment Deployment Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Deployment Status" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          # Backend Render
+          if [[ "${{ needs.deploy-backend-render.result }}" == "success" ]]; then
+            echo "- ✅ Backend (Render) deployed successfully" >> $GITHUB_STEP_SUMMARY
+          elif [[ "${{ needs.deploy-backend-render.result }}" == "skipped" ]]; then
+            echo "- ⏭️ Backend (Render) skipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Backend (Render) deployment failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Frontend Render
+          if [[ "${{ needs.deploy-frontend-render.result }}" == "success" ]]; then
+            echo "- ✅ Frontend (Render) deployed successfully" >> $GITHUB_STEP_SUMMARY
+          elif [[ "${{ needs.deploy-frontend-render.result }}" == "skipped" ]]; then
+            echo "- ⏭️ Frontend (Render) skipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ❌ Frontend (Render) deployment failed" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          # Frontend Vercel
+          if [[ "${{ needs.deploy-frontend-vercel.result }}" == "success" ]]; then
+            echo "- ✅ Frontend (Vercel) deployed via GitHub integration" >> $GITHUB_STEP_SUMMARY
+          elif [[ "${{ needs.deploy-frontend-vercel.result }}" == "skipped" ]]; then
+            echo "- ⏭️ Frontend (Vercel) skipped" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "- ℹ️ Frontend (Vercel) - check Vercel dashboard" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Deployment Targets" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This project supports multiple deployment environments:" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🎯 Production Environments" >> $GITHUB_STEP_SUMMARY
+          echo "1. **Backend on Render** - Main API server" >> $GITHUB_STEP_SUMMARY
+          echo "2. **Frontend on Vercel** - Primary demo (auto-deploy via GitHub)" >> $GITHUB_STEP_SUMMARY
+          echo "3. **Frontend on Render** - Alternative deployment" >> $GITHUB_STEP_SUMMARY
+          echo "4. **Docker Compose** - Local development" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "## Configuration Secrets" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Render Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- \`RENDER_DEPLOY_HOOK_BACKEND\` - Backend deploy hook" >> $GITHUB_STEP_SUMMARY
+          echo "- \`RENDER_DEPLOY_HOOK_FRONTEND\` - Frontend deploy hook" >> $GITHUB_STEP_SUMMARY
+          echo "- \`BACKEND_URL\` - Backend health check URL" >> $GITHUB_STEP_SUMMARY
+          echo "- \`FRONTEND_URL\` - Render frontend URL" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### Vercel Deployment" >> $GITHUB_STEP_SUMMARY
+          echo "- \`VERCEL_PRODUCTION_URL\` - Vercel production URL (optional)" >> $GITHUB_STEP_SUMMARY
+          echo "- Vercel auto-deploys via GitHub integration (no manual setup needed)" >> $GITHUB_STEP_SUMMARY

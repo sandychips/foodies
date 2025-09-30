@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Frontend</title>
+</head>
+<body>
+    <h1>Frontend Debug Test</h1>
+    <div id="result"></div>
+    <iframe id="testFrame" src="http://localhost:3002/" width="100%" height="400" style="border: 1px solid #ccc;"></iframe>
+
+    <script>
+        async function debugFrontend() {
+            const resultDiv = document.getElementById('result');
+            const iframe = document.getElementById('testFrame');
+
+            let results = [];
+
+            try {
+                // Test 1: Basic connectivity
+                const response = await fetch('http://localhost:3002/');
+                results.push(`✅ Server responding: ${response.status}`);
+
+                // Test 2: Check HTML content
+                const html = await response.text();
+                if (html.includes('id="root"')) {
+                    results.push('✅ Root element found in HTML');
+                } else {
+                    results.push('❌ Root element missing');
+                }
+
+                if (html.includes('/src/main.jsx')) {
+                    results.push('✅ Main.jsx script tag found');
+                } else {
+                    results.push('❌ Main.jsx script tag missing');
+                }
+
+                // Test 3: Check main.jsx accessibility
+                try {
+                    const mainResponse = await fetch('http://localhost:3002/src/main.jsx');
+                    if (mainResponse.ok) {
+                        results.push('✅ Main.jsx accessible');
+                    } else {
+                        results.push(`❌ Main.jsx not accessible: ${mainResponse.status}`);
+                    }
+                } catch (e) {
+                    results.push(`❌ Main.jsx fetch error: ${e.message}`);
+                }
+
+                // Test 4: Check App.jsx
+                try {
+                    const appResponse = await fetch('http://localhost:3002/src/App.jsx');
+                    if (appResponse.ok) {
+                        results.push('✅ App.jsx accessible');
+                    } else {
+                        results.push(`❌ App.jsx not accessible: ${appResponse.status}`);
+                    }
+                } catch (e) {
+                    results.push(`❌ App.jsx fetch error: ${e.message}`);
+                }
+
+                // Test 5: Check Redux store
+                try {
+                    const storeResponse = await fetch('http://localhost:3002/src/redux/store.js');
+                    if (storeResponse.ok) {
+                        results.push('✅ Redux store accessible');
+                    } else {
+                        results.push(`❌ Redux store not accessible: ${storeResponse.status}`);
+                    }
+                } catch (e) {
+                    results.push(`❌ Redux store fetch error: ${e.message}`);
+                }
+
+                // Test 6: Check one page component
+                try {
+                    const pageResponse = await fetch('http://localhost:3002/src/pages/HomePage/HomePage.jsx');
+                    if (pageResponse.ok) {
+                        results.push('✅ HomePage component accessible');
+                    } else {
+                        results.push(`❌ HomePage component not accessible: ${pageResponse.status}`);
+                    }
+                } catch (e) {
+                    results.push(`❌ HomePage component fetch error: ${e.message}`);
+                }
+
+                resultDiv.innerHTML = '<h2>Debug Results:</h2><ul>' +
+                    results.map(r => `<li>${r}</li>`).join('') +
+                    '</ul>';
+
+            } catch (error) {
+                resultDiv.innerHTML = `<h2 style="color: red;">Debug Error:</h2><p>${error.message}</p>`;
+            }
+
+            // Listen for iframe load events to detect if it loads successfully
+            iframe.onload = function() {
+                setTimeout(() => {
+                    try {
+                        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const rootContent = iframeDoc.getElementById('root');
+                        if (rootContent && rootContent.innerHTML.trim() !== '') {
+                            resultDiv.innerHTML += '<p style="color: green;">✅ React app rendered content in iframe</p>';
+                        } else {
+                            resultDiv.innerHTML += '<p style="color: red;">❌ React app root is empty (white screen)</p>';
+                        }
+                    } catch (e) {
+                        resultDiv.innerHTML += '<p style="color: orange;">⚠️ Cannot access iframe content (CORS restriction)</p>';
+                    }
+                }, 2000);
+            };
+        }
+
+        window.onload = debugFrontend;
+    </script>
+</body>
+</html>

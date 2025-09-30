@@ -1,0 +1,17 @@
+.logoIcon {
+  fill: var(--white);
+  width: 70px;
+  margin-top: 5px;
+  height: 24px;
+}
+
+:global(.header-light) .logoIcon {
+  fill: var(--main);
+}
+
+@media (min-width: 768px) {
+  .logoIcon {
+    width: 83px;
+    height: 28px;
+  }
+}

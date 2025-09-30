@@ -1,0 +1,58 @@
+.filters {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.select {
+  padding: 16px 12px;
+  border-radius: 50px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  text-transform: none;
+  background: white;
+  color: var(--main);
+}
+select {
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
+  border: none;
+  -moz-padding-start: calc(10px - 3px);
+}
+
+.customSelectWrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.customSelectWrapper select {
+  width: 100%;
+  padding-right: 32px;
+}
+.customSelectWrapper::after {
+  content: "▼";
+  font-size: 10px;
+  position: absolute;
+  right: 30px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #bfbebe;
+  pointer-events: none;
+}
+
+@media only screen and (min-width: 768px) {
+  .filters {
+    flex-direction: row;
+  }
+
+  .select {
+    padding: 16px 18px;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  .filters {
+    flex-direction: column;
+    flex-grow: 1;
+  }
+}

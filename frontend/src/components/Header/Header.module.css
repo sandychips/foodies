@@ -1,0 +1,31 @@
+.headerWrapper {
+  margin-top: 36px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: transparent;
+  padding: 0 23px;
+}
+
+:global(.header-dark).headerWrapper {
+  margin-top: 0;
+  position: absolute;
+  top: 23px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+@media (min-width: 768px) {
+  .headerWrapper {
+    top: 27px;
+    padding: 0 46px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .headerWrapper {
+    padding: 0 80px;
+  }
+}
