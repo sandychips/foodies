@@ -1,4 +1,4 @@
-previewsEnabled: true
+previewsEnabled: false
 
 # Database Services
 databases:
@@ -20,7 +20,7 @@ services:
   - type: web
     name: foodies-staging-backend
     env: node
-    plan: free  # Change to starter for production
+    plan: starter
     branch: develop
     buildCommand: cd backend && npm ci
     startCommand: cd backend && npm start
@@ -98,7 +98,7 @@ services:
   - type: web
     name: foodies-staging-frontend
     env: static
-    plan: free
+    plan: starter
     branch: develop
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
@@ -113,7 +113,7 @@ services:
   - type: web
     name: foodies-prod-frontend
     env: static
-    plan: free
+    plan: starter
     branch: main
     buildCommand: cd frontend && npm ci && npm run build
     staticPublishPath: frontend/dist
