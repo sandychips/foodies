@@ -19,7 +19,7 @@
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "formik": "^2.4.6",
-    "lucide-react": "^0.525.0",
+    "lucide-react": "^0.544.0",
     "modern-css-reset": "^1.4.0",
     "modern-normalize": "^3.0.1",
     "prop-types": "^15.8.1",
