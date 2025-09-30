@@ -1,6 +1,7 @@
+/* global global */
+
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import {
-  usersSlice,
   usersReducer,
   resetUsersState,
   clearUsersError,
@@ -14,7 +15,6 @@ import {
   registerUser,
   loginUser,
   logoutUser,
-  fetchMe,
 } from '../../ops/usersOps';
 
 // Mock localStorage

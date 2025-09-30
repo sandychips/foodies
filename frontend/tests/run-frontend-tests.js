@@ -1,5 +1,7 @@
 #!/usr/bin/env node
 
+/* global process */
+
 import registerModule from 'esbuild-register/dist/node';
 import assert from 'node:assert/strict';
 import { JSDOM } from 'jsdom';
@@ -21,7 +23,7 @@ Module._resolveFilename = function patchedResolve(request, parent, ...rest) {
   if (!request.startsWith('node:') && !request.endsWith('.js')) {
     try {
       return originalResolveFilename.call(this, `${request}.js`, parent, ...rest);
-    } catch (error) {
+    } catch {
       // fall through to default resolution
     }
   }
@@ -30,15 +32,6 @@ Module._resolveFilename = function patchedResolve(request, parent, ...rest) {
 
 const { default: App } = await import('../src/App.jsx');
 const { renderWithProviders } = await import('../src/test-utils.jsx');
-import * as categoriesOps from '../src/redux/ops/categoriesOps.js';
-import * as areasOps from '../src/redux/ops/areasOps.js';
-import * as ingredientsOps from '../src/redux/ops/ingredientsOps.js';
-import * as testimonialsOps from '../src/redux/ops/testimonialsOps.js';
-
-categoriesOps.fetchCategories = () => () => Promise.resolve([]);
-areasOps.fetchAreas = () => () => Promise.resolve([]);
-ingredientsOps.fetchIngredients = () => () => Promise.resolve([]);
-testimonialsOps.fetchTestimonials = () => () => Promise.resolve([]);
 
 const dom = new JSDOM('<!doctype html><html><body></body></html>', {
   url: 'http://localhost/',

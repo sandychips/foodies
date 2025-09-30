@@ -1,5 +1,7 @@
 import axios from "axios";
 
+/* global process */
+
 const resolveBaseUrl = () => {
   const envFromImport = typeof import.meta !== 'undefined' ? import.meta.env?.VITE_API_BASE_URL : undefined;
   const envFromProcess = typeof process !== 'undefined' ? process.env?.VITE_API_BASE_URL : undefined;

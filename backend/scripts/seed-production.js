@@ -17,7 +17,7 @@ const { sequelize } = require('../models');
 const runCommand = (command, description) => {
   console.log(`\n🔄 ${description}...`);
   try {
-    const output = execSync(command, { 
+    execSync(command, { 
       stdio: 'inherit',
       cwd: __dirname + '/..'
     });
