@@ -46,4 +46,4 @@ services:
       - key: CLOUDINARY_API_SECRET
         value: "5FRoXA6Lk9Vu4d3NxnYbMhxtSno"
       - key: CORS_ORIGIN
-        value: "https://foodies-frontend.onrender.com,https://foodies-himaegwgu-andriis-projects-46659e9e.vercel.app,https://foodies-backend-6qrb.onrender.com"
+        value: "https://foodies-frontend.onrender.com,https://foodies-backend-6qrb.onrender.com,https://foodies-lovat.vercel.app,https://foodies-git-main-andriis-projects-46659e9e.vercel.app,https://foodies-ixrzj0li6-andriis-projects-46659e9e.vercel.app"
